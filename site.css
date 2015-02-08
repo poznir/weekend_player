@@ -20,7 +20,7 @@ body {
 }
 
 .player_size_slider {
-  width: 100px;
+  width: 100px !important;
   margin-left: 50px;
 }
 
