@@ -99,7 +99,7 @@ function send_data($data) {
   die();
 }
 
-function update_member_flag() {
+function update_member_flag($room_id) {
   global $Rooms, $Users;
   $room = $Rooms->get_room($room_id);
   $room->flag_active_member($Users->get_auth_email());
