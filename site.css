@@ -4,6 +4,10 @@ body {
   background-color: #eee;
 }
 
+.bottom_spacer {
+  height: 50pt;
+}
+
 .room_list_title {
   color: gray;
 }
@@ -12,29 +16,37 @@ body {
   position: relative;
 }
 
-.room_panel {
+.room_panels {
   position: absolute;
   left:0;
   top: 0;
-  width: 250pt;
+  width: 160pt;
+}
+
+.room_panel {
+  border: 1px solid black;
+  padding-left: 2px;
+  border-radius: 20px;
+  padding-right: 2px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 5px;
 }
 
 .room_main {
   position: absolute;
-  left: 250pt;
+  left: 170pt;
   top: 0;
 }
 
-.room_members_list {
-
+.room_panel_head {
+  padding-left: 10px;
+  color: rgb(68, 69, 178);
 }
 
-.room_members_list #room_members_list_head {
-
-}
-
-.room_members_list #room_members_list {
+.#room_members_list {
   list-style-type: square;
+  color: rgb(59, 136, 59);
 }
 
 .room_current_title {

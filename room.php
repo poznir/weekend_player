@@ -26,9 +26,13 @@ room_id = "<?=$room_id?>";
 <div class="pinpoint_rulez">Pinpoint Rulez.</div>
 
 <div class="room_container">
-  <div class="room_panel">
-    <div class="room_members_list">
-      <div id="room_members_list_head">room members (<span id="room_members_list_head_count">0</span>):</div>
+  <div class="room_panels">
+    <div class="room_panel">
+      <div class="room_panel_head">Player size (1-3):</div>
+      <input type="range" min="1" max="3" value="1" step="1" style="width: 100px;" onchange="set_player_size(this.value)">
+    </div>
+    <div class="room_panel">
+      <div class="room_panel_head">room members (<span id="room_members_list_head_count">0</span>):</div>
       <ul id="room_members_list"></ul>
     </div>
   </div>
@@ -51,5 +55,7 @@ room_id = "<?=$room_id?>";
     <div id="div_playlist"></div>
   </div>
 </div>
+
+<div class="bottom_spacer"></div>
 
 <? require("footer.php"); ?>

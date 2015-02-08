@@ -27,6 +27,24 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
+function set_player_size(size) {
+    var frame = $("player")[0];
+    switch size {
+        case 1:
+            frame.width = 640;
+            frame.height = 390;
+        break;
+        case 2:
+            frame.width = 800;
+            frame.height = 600;
+        break;
+        case 3:
+            frame.width = 1024;
+            frame.height = 820;
+        break;
+    }
+}
+
 function onPlayerReady(event) {
     if (!is_room_admin) {
         player.mute(); // mute by default for none admin users.. changeable by clicking on unmute in the player
@@ -164,8 +182,8 @@ function is_song_changed(id, data) {
 }
 
 function update_lists_info(playlist, history, members) {
-    $("#div_history")[0].innerHTML = "";
-    $("#div_playlist")[0].innerHTML = "";
+    $("#div_history")[0].innerTEXT = "";
+    $("#div_playlist")[0].innerTEXT = "";
     redraw_list($("#div_history")[0], history, false);
     redraw_list($("#div_playlist")[0], playlist, true);
     redraw_members_list(members);
@@ -173,7 +191,7 @@ function update_lists_info(playlist, history, members) {
 
 function create_inline_div(text, className, title) {
     var el = $("<div>")[0];
-    el.innerHTML = text;
+    el.innerTEXT = text;
     if (title) {
         el.title = title;
     }
@@ -186,7 +204,7 @@ function redraw_members_list(members) {
     // last_update, member_email, member_name
     var container = $("#room_members_list")[0];
     // clear old data
-    container.innerHTML = "";
+    container.innerTEXT = "";
 
     for (var i in members) {
         var one = members[i];
@@ -230,7 +248,7 @@ function redraw_list(div, list, inc_counter) {
 }
 
 function update_current_info(one) {
-    $("#current_song_title")[0].innerHTML = "";
+    $("#current_song_title")[0].innerTEXT = "";
     var v = one["v"];
     var title = one["title"];
     var added_by_email = one["added_by_email"];
