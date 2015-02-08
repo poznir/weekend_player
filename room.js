@@ -188,8 +188,8 @@ function redraw_members_list(members) {
     // clear old data
     container.innerHTML = "";
 
-    for (var i in list) {
-        var one = list[i];
+    for (var i in members) {
+        var one = members[i];
         var li = $("<li>")[0];
         li.innerText = one["member_name"];
         li.title = one["member_email"] + " (last update before " + one["last_update"] + " seconds)";
