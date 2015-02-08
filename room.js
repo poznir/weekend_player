@@ -30,15 +30,15 @@ function onYouTubeIframeAPIReady() {
 function set_player_size(size) {
     var frame = $("player")[0];
     switch (size) {
-        case 1:
+        case "1":
             frame.width = 640;
             frame.height = 390;
         break;
-        case 2:
+        case "2":
             frame.width = 800;
             frame.height = 600;
         break;
-        case 3:
+        case "3":
             frame.width = 1024;
             frame.height = 820;
         break;
