@@ -182,8 +182,8 @@ function is_song_changed(id, data) {
 }
 
 function update_lists_info(playlist, history, members) {
-    $("#div_history")[0].innerTEXT = "";
-    $("#div_playlist")[0].innerTEXT = "";
+    $("#div_history")[0].innerHTML = "";
+    $("#div_playlist")[0].innerHTML = "";
     redraw_list($("#div_history")[0], history, false);
     redraw_list($("#div_playlist")[0], playlist, true);
     redraw_members_list(members);
@@ -191,7 +191,7 @@ function update_lists_info(playlist, history, members) {
 
 function create_inline_div(text, className, title) {
     var el = $("<div>")[0];
-    el.innerTEXT = text;
+    el.innerHTML = text;
     if (title) {
         el.title = title;
     }
@@ -204,7 +204,7 @@ function redraw_members_list(members) {
     // last_update, member_email, member_name
     var container = $("#room_members_list")[0];
     // clear old data
-    container.innerTEXT = "";
+    container.innerHTML = "";
 
     for (var i in members) {
         var one = members[i];
@@ -248,7 +248,7 @@ function redraw_list(div, list, inc_counter) {
 }
 
 function update_current_info(one) {
-    $("#current_song_title")[0].innerTEXT = "";
+    $("#current_song_title")[0].innerHTML = "";
     var v = one["v"];
     var title = one["title"];
     var added_by_email = one["added_by_email"];
