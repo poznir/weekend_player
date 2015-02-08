@@ -133,6 +133,9 @@ function generate_ajax_key() {
 
 function parsePollingData(data) {
     if (!data || data["timeout"] == true) {
+        if (data && data["members"]) {
+            redraw_members_list(data["members"]);
+        }
         return;
     }
     DT_update_version = data["update_version"];

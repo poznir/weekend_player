@@ -81,7 +81,7 @@ function fetch_data($room_id) {
     "currently_playing_id" => $room->get_currently_playing_id(),
     "playlist" => $room->get_playlist(),
     "history" => $room->get_history(),
-    "members" => $room->get_members($config_server_poll_max_executing_time)
+    "members" => get_members_list($room_id, $room)
   );
   return $data;
 }
@@ -100,11 +100,20 @@ function send_data($data) {
 }
 
 function update_member_flag() {
+  global $Rooms, $Users;
   $room = $Rooms->get_room($room_id);
   $room->flag_active_member($Users->get_auth_email());
 }
 
-update_member_flag(); // add user to the room members list
+function get_members_list($room_id, $room=null) {
+  global $Rooms, $config_server_poll_max_executing_time;
+  if (!$room) {
+    $room = $Rooms->get_room($room_id);
+  }
+  return $room->get_members($config_server_poll_max_executing_time);
+}
+
+update_member_flag($room_id); // add user to the room members list
 
 while (!is_timeout($start_time, $config_server_poll_max_executing_time)) {
   if (new_playlist_data($room_id, $update_version)) {
@@ -125,6 +134,7 @@ while (!is_timeout($start_time, $config_server_poll_max_executing_time)) {
 //timeout data:
 send_data((object)[
   "timeout" => true,
-  "room_id" => $room_id
+  "room_id" => $room_id,
+  "members" => get_members_list($room_id)
 ]);
 ?>
