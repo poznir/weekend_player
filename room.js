@@ -46,7 +46,9 @@ function set_player_size(size) {
 }
 
 function onPlayerReady(event) {
-    if (!is_room_admin) {
+    if (is_room_admin) {
+        player.unMute();
+    } else {
         player.mute(); // mute by default for none admin users.. changeable by clicking on unmute in the player
     }
     doPolling();
