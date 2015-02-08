@@ -8,7 +8,7 @@ class Rooms {
   }
 
   function get_list() {
-    $result = $this->db->query("select id from weekendv2_rooms order by name COLLATE NOCASE");
+    $result = $this->db->query("select id from weekendv2_rooms order by name");
     if (!$result) {
       return false;
     }
