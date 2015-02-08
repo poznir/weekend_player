@@ -191,7 +191,7 @@ function redraw_members_list(members) {
     for (var i in members) {
         var one = members[i];
         var li = $("<li>")[0];
-        li.innerText = one["member_name"];
+        li.innerText = li.textContent = one["member_name"];
         li.title = one["member_email"] + " (last update before " + one["last_update"] + " seconds)";
         container.appendChild(li);
     }

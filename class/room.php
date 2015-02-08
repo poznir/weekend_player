@@ -79,11 +79,12 @@ class Room {
   }
 
   public function get_members($max_executing_time) {
-    $time_margin = 15;
+    $time_margin = 10;
+    $total_margin = 0 - $max_executing_time - $time_margin;
     // cleanup old members:
-    $result = $this->db->query("delete from weekendv2_room_members where weekendv2_room_members.last_update < (NOW() - {$max_executing_time} - {$time_margin})");
+    $result = $this->db->query("delete from weekendv2_room_members where weekendv2_room_members.last_update < TIMESTAMPADD(SECOND,{$total_margin},NOW())");
     // get current members:
-    $result = $this->db->query("select weekendv2_room_members.member_email as member_email, (NOW() - weekendv2_room_members.last_update) as last_update, weekendv2_users.name as member_name from weekendv2_room_members left join weekendv2_users on (weekendv2_users.email=weekendv2_room_members.member_email) where weekendv2_room_members.room_id='{$this->get_id()}'");
+    $result = $this->db->query("select weekendv2_room_members.member_email as member_email, TIMESTAMPDIFF(SECOND, weekendv2_room_members.last_update, NOW()) as last_update, weekendv2_users.name as member_name from weekendv2_room_members left join weekendv2_users on (weekendv2_users.email=weekendv2_room_members.member_email) where weekendv2_room_members.room_id='{$this->get_id()}'");
     if (!$result) {
       return array();
     }
