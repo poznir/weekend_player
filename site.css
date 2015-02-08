@@ -7,6 +7,12 @@ body {
 .room_list_members_count {
   font-size: 14pt;
   padding-left: 5px;
+  color: green;
+}
+
+.room_list_members_count_empty {
+  color: gray !important;
+  font-style: italic;
 }
 
 .bottom_spacer {

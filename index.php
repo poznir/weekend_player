@@ -22,7 +22,7 @@ require("header.php");
       <span class="label label-primary">
         <?=$room->get_name()?> (Admin: <?=$room->get_owner_name()?>)
       </span>
-      <span class="room_list_members_count">
+      <span class="room_list_members_count <?=($members_count == 0 ? "room_list_members_count_empty" : "")?>">
         (<?=($members_count > 0 ? "{$members_count} active members" : "no active members")?>)
       </span>
     </a>
