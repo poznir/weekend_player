@@ -1,0 +1,15 @@
+[ ] * remove room (for admin only)
+[ ] * logout
+[V] * link to youtube video when clicking on video name, in NEW page (_blank)
+[ ] * vote to move song
+[ ] * vote to rise song on the playlist
+[ ] * list of users in the room
+[ ] * chat for users in the room
+[ ] * stats
+[V] * prevent from adding the same song 2+ times in a row
+[V] * show in the list (history only) why the song skipped.. or played.
+[V] * playlist - removed timestamp
+[V] * playlist - add tooltip over the name to shows the email
+[ ] * add option to set the player size (just change the iframe size after created) - maybe button to jump between 2 sizes..
+[ ] * when an admin joins his room, set the player to 'unmute' (sometimes youtube remembers mute from other room)
+[ ] * room list - number of users connected to the room right now.

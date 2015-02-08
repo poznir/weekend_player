@@ -1,0 +1,85 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.room_list_title {
+  color: gray;
+}
+
+.room_container {
+  position: relative;
+}
+
+.room_panel {
+  position: absolute;
+  left:0;
+  top: 0;
+  width: 250pt;
+}
+
+.room_main {
+  position: absolute;
+  left: 250pt;
+  top: 0;
+}
+
+.room_members_list {
+
+}
+
+.room_members_list #room_members_list_head {
+
+}
+
+.room_members_list #room_members_list {
+  list-style-type: square;
+}
+
+.room_current_title {
+  color: blue;
+}
+
+.room_song_time {
+  color: green;
+}
+
+.pinpoint_rulez {
+  position: absolute;
+  color: gray;
+  left: 10px;
+  top: 10px;
+}
+
+.add_new_form {
+  position: relative;
+}
+
+.add_new_form_loading {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(128, 128, 128, 0.44);
+  width: 640px;
+  text-align: center
+}
+
+.add_new_form_loading_hide {
+  display: none;
+}
+
+.add_new_form_loading img {
+  margin-top: 20px;
+}
+
+.item_inline_div {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.item_inline_skipreason {
+  color: rgb(255, 121, 121);
+}
