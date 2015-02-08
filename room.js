@@ -28,7 +28,7 @@ function onYouTubeIframeAPIReady() {
 }
 
 function set_player_size(size) {
-    var frame = $("player")[0];
+    var frame = $("#player")[0];
     switch (size) {
         case "1":
             frame.width = 640;

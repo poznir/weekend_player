@@ -8,6 +8,11 @@ body {
   height: 50pt;
 }
 
+.player_size_slider {
+  width: 100px;
+  margin-left: 50px;
+}
+
 .room_list_title {
   color: gray;
 }
@@ -44,7 +49,7 @@ body {
   color: rgb(68, 69, 178);
 }
 
-.#room_members_list {
+#room_members_list {
   list-style-type: square;
   color: rgb(59, 136, 59);
 }
