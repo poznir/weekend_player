@@ -28,7 +28,7 @@ room_id = "<?=$room_id?>";
 <div class="room_container">
   <div class="room_panels">
     <div class="room_panel">
-      <div class="room_panel_head">Shared admin volume:</div>
+      <div class="room_panel_head">Shared admin volume (<span id="admin_volume_count">100</span>)::</div>
       <input type="range" class="admin_volume_slider" id="player_admin_volume_slider" min="0" max="100" value="100" step="1" onchange="set_admin_volume(this.value)">
     </div>
     <div class="room_panel">

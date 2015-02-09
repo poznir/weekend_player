@@ -120,7 +120,7 @@ function get_members_list($room) {
   return $room->get_members($config_server_poll_max_executing_time);
 }
 
-function get_admin_volume($room, $room=null) {
+function get_admin_volume($room) {
   global $config_server_poll_max_executing_time;
   return $room->get_admin_volume();
 }

@@ -185,6 +185,7 @@ function parsePollingData(data) {
 
 function redraw_admin_volume(volume) {
     $("#player_admin_volume_slider")[0].value = volume;
+    $("#admin_volume_count")[0].innerText = volume;
     if (is_room_admin) {
         player.setVolume(volume);
     }
@@ -192,7 +193,7 @@ function redraw_admin_volume(volume) {
 
 function set_admin_volume(volume) {
     if (is_room_admin) {
-        redraw_admin_volume(current_volume); // update admin ui
+        redraw_admin_volume(volume); // update admin ui
     }
     $.ajax({
         url: "server.php?" + generate_ajax_key(),
@@ -213,7 +214,6 @@ function monitor_admin_volume() {
     var current_volume = player.getVolume();
     if (current_volume != admin_volume_last_volume) {
         admin_volume_last_volume = current_volume;
-        redraw_admin_volume(current_volume); // update admin ui
         set_admin_volume(current_volume); // update server
     }
 }
