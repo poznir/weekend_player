@@ -24,6 +24,11 @@ body {
   margin-left: 50px;
 }
 
+.admin_volume_slider {
+  width: 170px !important;
+  margin-left: 10px;
+}
+
 .room_list_title {
   color: gray;
 }
@@ -33,9 +38,9 @@ body {
 }
 
 .room_panels {
-  position: absolute;
-  left:0;
-  top: 0;
+  position: fixed;
+  left: 0;
+  top: 35pt;
   width: 160pt;
 }
 

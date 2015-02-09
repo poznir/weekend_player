@@ -7,6 +7,8 @@ var DT_update_version = "";
 var DT_currently_playing_id = "";
 var DT_currently_playing_data = {};
 var tag = document.createElement('script');
+var admin_volume_monitor = null;
+var admin_volume_last_volume = 100;
 
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -45,9 +47,11 @@ function set_player_size(size) {
     }
 }
 
+
 function onPlayerReady(event) {
     if (is_room_admin) {
         player.unMute();
+        admin_volume_monitor = setTimeout(monitor_admin_volume, 1000);
     } else {
         player.mute(); // mute by default for none admin users.. changeable by clicking on unmute in the player
     }
@@ -153,8 +157,13 @@ function generate_ajax_key() {
 
 function parsePollingData(data) {
     if (!data || data["timeout"] == true) {
-        if (data && data["members"]) {
-            redraw_members_list(data["members"]);
+        if (data) {
+            if (data["members"]) {
+                redraw_members_list(data["members"]);
+            }
+            if (data["admin_volume"]) {
+                redraw_admin_volume(data["admin_volume"]);
+            }
         }
         return;
     }
@@ -171,6 +180,42 @@ function parsePollingData(data) {
         }
     }
     update_lists_info(playlist, history, members);
+    redraw_admin_volume(data["admin_volume"]);
+}
+
+function redraw_admin_volume(volume) {
+    $("#player_admin_volume_slider")[0].value = volume;
+    if (is_room_admin) {
+        player.setVolume(volume);
+    }
+}
+
+function set_admin_volume(volume) {
+    if (is_room_admin) {
+        redraw_admin_volume(current_volume); // update admin ui
+    }
+    $.ajax({
+        url: "server.php?" + generate_ajax_key(),
+        type: "POST",
+        data: {
+            "id": room_id,
+            "task": "client",
+            "kind": "update_volume",
+            "volume": volume
+        },
+        dataType: "json",
+        timeout: 60000
+    });
+}
+
+function monitor_admin_volume() {
+    // invokes every second
+    var current_volume = player.getVolume();
+    if (current_volume != admin_volume_last_volume) {
+        admin_volume_last_volume = current_volume;
+        redraw_admin_volume(current_volume); // update admin ui
+        set_admin_volume(current_volume); // update server
+    }
 }
 
 function is_song_changed(id, data) {

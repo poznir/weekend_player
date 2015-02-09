@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `weekendv2_playlist` (
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `skip_reason` varchar(250) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -50,8 +50,9 @@ CREATE TABLE IF NOT EXISTS `weekendv2_rooms` (
   `name` varchar(250) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `currently_playing_id` int(11) NOT NULL DEFAULT '0',
   `update_version` varchar(32) NOT NULL DEFAULT '',
+  `admin_volume` int(11) NOT NULL DEFAULT '100',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -81,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `weekendv2_users` (
   `email` varchar(250) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_unique` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

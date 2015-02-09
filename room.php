@@ -28,6 +28,10 @@ room_id = "<?=$room_id?>";
 <div class="room_container">
   <div class="room_panels">
     <div class="room_panel">
+      <div class="room_panel_head">Shared admin volume:</div>
+      <input type="range" class="admin_volume_slider" id="player_admin_volume_slider" min="0" max="100" value="100" step="1" onchange="set_admin_volume(this.value)">
+    </div>
+    <div class="room_panel">
       <div class="room_panel_head">Player size (1-3):</div>
       <input type="range" class="player_size_slider" min="1" max="3" value="1" step="1" onchange="set_player_size(this.value)">
     </div>
@@ -53,9 +57,8 @@ room_id = "<?=$room_id?>";
 
     <h4>Playing next:</h4>
     <div id="div_playlist"></div>
+    <div class="bottom_spacer"></div>
   </div>
 </div>
-
-<div class="bottom_spacer"></div>
 
 <? require("footer.php"); ?>

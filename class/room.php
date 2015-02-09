@@ -52,6 +52,19 @@ class Room {
     return $this->update_version;
   }
 
+  public function get_admin_volume() {
+    $result = $this->db->query("select admin_volume from weekendv2_rooms where id='{$this->get_id()}' limit 1");
+    if (!$result) {
+      return 0;
+    }
+    $row = $this->db->fetch($result);
+    return $row["admin_volume"];
+  }
+
+  public function set_admin_volume($volume) {
+    $this->db->query("update weekendv2_rooms set admin_volume='{$volume}' where id='{$this->get_id()}' limit 1");
+  }
+
   public function get_playlist() {
     $result = $this->db->query("select weekendv2_playlist.*,weekendv2_users.name as user_name from weekendv2_playlist left join weekendv2_users on (weekendv2_users.email=weekendv2_playlist.added_by_email) where weekendv2_playlist.room_id='{$this->get_id()}' AND weekendv2_playlist.id>='{$this->get_currently_playing_id()}' order by weekendv2_playlist.id");
     if (!$result) {
@@ -78,16 +91,10 @@ class Room {
     return $list;
   }
 
-  private function clear_members($max_executing_time) {
+  public function get_members_count($max_executing_time) {
     $time_margin = 10;
     $total_margin = 0 - $max_executing_time - $time_margin;
-    // cleanup old members:
-    $this->db->query("delete from weekendv2_room_members where weekendv2_room_members.last_update < TIMESTAMPADD(SECOND,{$total_margin},NOW())");
-  }
-
-  public function get_members_count($max_executing_time) {
-    $this->clear_members($max_executing_time);
-    $result = $this->db->query("select count(*) as cc from weekendv2_room_members where weekendv2_room_members.room_id='{$this->get_id()}'");
+    $result = $this->db->query("select count(*) as cc from weekendv2_room_members where weekendv2_room_members.room_id='{$this->get_id()}' and weekendv2_room_members.last_update >= TIMESTAMPADD(SECOND,{$total_margin},NOW())");
     if (!$result) {
       return 0;
     }
@@ -96,9 +103,10 @@ class Room {
   }
 
   public function get_members($max_executing_time) {
-    $this->clear_members($max_executing_time);
+    $time_margin = 10;
+    $total_margin = 0 - $max_executing_time - $time_margin;
     // get current members:
-    $result = $this->db->query("select weekendv2_room_members.member_email as member_email, TIMESTAMPDIFF(SECOND, weekendv2_room_members.last_update, NOW()) as last_update, weekendv2_users.name as member_name from weekendv2_room_members left join weekendv2_users on (weekendv2_users.email=weekendv2_room_members.member_email) where weekendv2_room_members.room_id='{$this->get_id()}'");
+    $result = $this->db->query("select weekendv2_room_members.member_email as member_email, TIMESTAMPDIFF(SECOND, weekendv2_room_members.last_update, NOW()) as last_update, weekendv2_users.name as member_name from weekendv2_room_members left join weekendv2_users on (weekendv2_users.email=weekendv2_room_members.member_email) where weekendv2_room_members.room_id='{$this->get_id()}' and weekendv2_room_members.last_update >= TIMESTAMPADD(SECOND,{$total_margin},NOW())");
     if (!$result) {
       return array();
     }

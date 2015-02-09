@@ -28,6 +28,10 @@ class Rooms {
     return new Room($this->db, $id);
   }
 
+  function clean_variable($variable) {
+    return $this->db->safe($variable);
+  }
+
   function room_exists_by_id($id) {
     $safe_id = $this->db->safe($id);
     $result = $this->db->query("select count(*) as cc from weekendv2_rooms where id='$safe_id' limit 1");
