@@ -72,7 +72,14 @@ if ($task == "client") {
     $radio = $Rooms->clean_variable($_POST["radio"]);
     if (is_numeric($radio) && ($radio == 0 || $radio == 1)) {
       $room->set_admin_random_radio($radio);
-      $room->generate_update_version();
+      if ($room->get_playlist_next_song() === false) {
+          // TODO:
+          // this can cause sometimes the last playing song to be cut and move to rnadom song,
+          // but it's ok for now.. will be fixed later on
+          $room->set_next_song($Playlist);
+      } else {
+        $room->generate_update_version();
+      }
       $result = true;
     }
   }
