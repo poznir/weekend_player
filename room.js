@@ -161,9 +161,6 @@ function parsePollingData(data) {
             if (data["members"]) {
                 redraw_members_list(data["members"]);
             }
-            if (data["admin_volume"]) {
-                redraw_admin_volume(data["admin_volume"]);
-            }
         }
         return;
     }
@@ -181,6 +178,7 @@ function parsePollingData(data) {
     }
     update_lists_info(playlist, history, members);
     redraw_admin_volume(data["admin_volume"]);
+    redraw_admin_radio(data["admin_radio"]);
 }
 
 function redraw_admin_volume(volume) {
@@ -216,6 +214,30 @@ function monitor_admin_volume() {
         admin_volume_last_volume = current_volume;
         set_admin_volume(current_volume); // update server
     }
+}
+
+function set_admin_radio(state) {
+    $.ajax({
+        url: "server.php?" + generate_ajax_key(),
+        type: "POST",
+        data: {
+            "id": room_id,
+            "task": "client",
+            "kind": "update_radio",
+            "radio": state
+        },
+        dataType: "json",
+        timeout: 60000
+    });
+}
+
+function redraw_admin_radio(state) {
+    if (state == "1") {
+        $("#player_admin_radio_stateOn")[0].checked = "checked";
+    } else {
+        $("#player_admin_radio_stateOff")[0].checked = "checked";
+    }
+    $("#admin_radio_state")[0].innerText = (state == "1" ? "On" : "Off");
 }
 
 function is_song_changed(id, data) {

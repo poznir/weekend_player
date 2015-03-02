@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `weekendv2_playlist` (
   `added_by_email` varchar(250) COLLATE utf8_bin NOT NULL,
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `skip_reason` varchar(250) COLLATE utf8_bin DEFAULT NULL,
+  `copy` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
@@ -51,8 +52,9 @@ CREATE TABLE IF NOT EXISTS `weekendv2_rooms` (
   `currently_playing_id` int(11) NOT NULL DEFAULT '0',
   `update_version` varchar(32) NOT NULL DEFAULT '',
   `admin_volume` int(11) NOT NULL DEFAULT '100',
+  `admin_random_radio` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -67,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `weekendv2_room_members` (
   `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_unique` (`room_id`, `member_email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

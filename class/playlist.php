@@ -9,6 +9,12 @@ class Playlist {
     $this->db->query("update weekendv2_playlist SET skip_reason='{$safe_reason}' where id='{$id}' LIMIT 1");
   }
 
+  public function add_copy($id) {
+    $id = $this->db->safe($id);
+    $this->db->query("INSERT INTO weekendv2_playlist (room_id, v, title, length, added_by_email, copy) SELECT room_id, v, title, length, added_by_email, '1' as copy FROM weekendv2_playlist WHERE id='{$id}' limit 1");
+    return $this->db->last_id();
+  }
+
   public function add_item($room_id, $v, $title, $length, $added_by_email) {
     $safe_title = $this->db->safe($title);
     $this->db->query("insert into weekendv2_playlist (room_id, v, title, length, added_by_email) values ('{$room_id}', '{$v}', '{$safe_title}', '{$length}', '{$added_by_email}')");

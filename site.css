@@ -29,6 +29,10 @@ body {
   margin-left: 10px;
 }
 
+.admin_radio_state {
+  margin-left: 10px;
+}
+
 .room_list_title {
   color: gray;
 }

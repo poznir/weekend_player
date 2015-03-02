@@ -27,11 +27,11 @@ if ($task == "report") {
   switch ($kind) {
     case 'player_error':
       $Playlist->set_item_report($room->get_currently_playing_id(), $Rooms->clean_variable($_POST["reason"]));
-      $room->set_next_song();
+      $room->set_next_song($Playlist);
       break;
     case 'player_end':
       $Playlist->set_item_report($room->get_currently_playing_id(), "played");
-      $room->set_next_song();
+      $room->set_next_song($Playlist);
       break;
   }
   send_data((object)[
@@ -46,13 +46,13 @@ if ($task == "client") {
     $video_id = $Rooms->clean_variable($_POST["video_id"]);
     if (!$Playlist->is_already_last_in_playlist($room_id, $video_id)) {
       if ($Playlist->fetch_youtube_video_and_add($room_id, $video_id, $Users->get_auth_email())) {
-        $result = true;
         // added
         if ($room->check_if_should_skip()) {
-          $room->set_next_song();
+          $room->set_next_song($Playlist);
         } else {
           $room->generate_update_version();
         } // if
+        $result = true;
       } // if
     } // if
   } // if
@@ -62,6 +62,17 @@ if ($task == "client") {
     $volume = $Rooms->clean_variable($_POST["volume"]);
     if (is_numeric($volume) && $volume >= 0 && $volume <= 100) {
       $room->set_admin_volume($volume);
+      $room->generate_update_version();
+      $result = true;
+    }
+  }
+
+  if ($kind == "update_radio") {
+    $room = $Rooms->get_room($room_id);
+    $radio = $Rooms->clean_variable($_POST["radio"]);
+    if (is_numeric($radio) && ($radio == 0 || $radio == 1)) {
+      $room->set_admin_random_radio($radio);
+      $room->generate_update_version();
       $result = true;
     }
   }
@@ -92,7 +103,8 @@ function fetch_data($room) {
     "playlist" => $room->get_playlist(),
     "history" => $room->get_history(),
     "members" => get_members_list($room),
-    "admin_volume" => get_admin_volume($room)
+    "admin_volume" => get_admin_volume($room),
+    "admin_radio" => get_admin_radio($room),
   );
   return $data;
 }
@@ -121,8 +133,11 @@ function get_members_list($room) {
 }
 
 function get_admin_volume($room) {
-  global $config_server_poll_max_executing_time;
   return $room->get_admin_volume();
+}
+
+function get_admin_radio($room) {
+  return $room->get_admin_random_radio();
 }
 
 $room = $Rooms->get_room($room_id);
@@ -139,7 +154,8 @@ while (!is_timeout($start_time, $config_server_poll_max_executing_time)) {
       "playlist" => $data["playlist"],
       "history" => $data["history"],
       "members" => $data["members"],
-      "admin_volume" => $data["admin_volume"]
+      "admin_volume" => $data["admin_volume"],
+      "admin_radio" => $data["admin_radio"]
     ]);
   }
   usleep(1000);
@@ -149,7 +165,6 @@ while (!is_timeout($start_time, $config_server_poll_max_executing_time)) {
 send_data((object)[
   "timeout" => true,
   "room_id" => $room_id,
-  "members" => get_members_list($room),
-  "admin_volume" => get_admin_volume($room)
+  "members" => get_members_list($room)
 ]);
 ?>

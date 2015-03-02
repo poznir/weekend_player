@@ -20,6 +20,10 @@ class mydb {
     return mysqli_fetch_array($result,MYSQLI_ASSOC);
   }
 
+  public function last_id() {
+    return mysqli_insert_id($this->con);
+  }
+
   public function safe($str) {
     return mysqli_real_escape_string($this->con, $str);
   }

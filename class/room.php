@@ -65,6 +65,22 @@ class Room {
     $this->db->query("update weekendv2_rooms set admin_volume='{$volume}' where id='{$this->get_id()}' limit 1");
   }
 
+  public function get_admin_random_radio() {
+    $result = $this->db->query("select admin_random_radio from weekendv2_rooms where id='{$this->get_id()}' limit 1");
+    if (!$result) {
+      return 0;
+    }
+    $row = $this->db->fetch($result);
+    return $row["admin_random_radio"];
+  }
+
+  public function set_admin_random_radio($bool) {
+    $bool = strval($bool);
+    if ($bool == "1" || $bool == "0") {
+      $this->db->query("update weekendv2_rooms set admin_random_radio='{$bool}' where id='{$this->get_id()}' limit 1");
+    }
+  }
+
   public function get_playlist() {
     $result = $this->db->query("select weekendv2_playlist.*,weekendv2_users.name as user_name from weekendv2_playlist left join weekendv2_users on (weekendv2_users.email=weekendv2_playlist.added_by_email) where weekendv2_playlist.room_id='{$this->get_id()}' AND weekendv2_playlist.id>='{$this->get_currently_playing_id()}' order by weekendv2_playlist.id");
     if (!$result) {
@@ -147,11 +163,33 @@ class Room {
     return true;
   }
 
-  public function set_next_song() {
+  public function get_random_song() {
+    // get random song and it must be different then the last played one.
+    $sql = "select id from weekendv2_playlist where room_id='{$this->get_id()}' AND copy='0' AND skip_reason='played' AND id < {$this->get_currently_playing_id()} ORDER BY RAND() LIMIT 1";
+    $result = $this->db->query($sql);
+    if (!$result) {
+      return false;
+    }
+    if (!$row = $this->db->fetch($result)) {
+      return false;
+    }
+    return $row["id"];
+  }
+
+  public function set_next_song($Playlist) {
     $next = $this->get_playlist_next_song();
     if ($next !== false) {
       $this->set_currently_playing_id($next);
       $this->generate_update_version();
+    } else {
+      if ($this->get_admin_random_radio() == "1") {
+        // radio is on and list is empty
+        $copy_id = $this->get_random_song();
+        if ($copy_id) {
+          $this->set_currently_playing_id($Playlist->add_copy($copy_id));
+          $this->generate_update_version();
+        }
+      }
     }
   }
 

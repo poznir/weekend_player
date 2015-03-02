@@ -28,8 +28,19 @@ room_id = "<?=$room_id?>";
 <div class="room_container">
   <div class="room_panels">
     <div class="room_panel">
-      <div class="room_panel_head">Shared admin volume (<span id="admin_volume_count">100</span>)::</div>
+      <div class="room_panel_head">Shared volume (<span id="admin_volume_count">100</span>):</div>
       <input type="range" class="admin_volume_slider" id="player_admin_volume_slider" min="0" max="100" value="100" step="1" onchange="set_admin_volume(this.value)">
+    </div>
+    <div class="room_panel">
+      <div class="room_panel_head">Shared Radio state (<span id="admin_radio_state">Off</span>):</div>
+      <input type="radio" class="admin_radio_state" id="player_admin_radio_stateOff" name="player_admin_radio_state" value="0" checked="checked" onchange="set_admin_radio(this.value)" />
+      <label for="0">Off</label>
+      <input type="radio" class="admin_radio_state" id="player_admin_radio_stateOn" name="player_admin_radio_state" value="1" onchange="set_admin_radio(this.value)" />
+      <label for="1">On</label>
+      <div style="
+          font-size: 9pt;
+          text-align: center;
+      ">( play random songs from the history when the list is empty, this is a shared option and not private. )</div>
     </div>
     <div class="room_panel">
       <div class="room_panel_head">Player size (1-3):</div>
