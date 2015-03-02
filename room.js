@@ -302,6 +302,7 @@ function redraw_list(div, list, inc_counter) {
         var skip_reason = one["skip_reason"];
         var user_name = one["user_name"];
         var length = one["length"];
+        var copy = one["copy"];
         var youtube_url = "https://www.youtube.com/watch?v=" + v;
 
         var div_container = $("<div>")[0];
@@ -309,6 +310,9 @@ function redraw_list(div, list, inc_counter) {
         div_container.appendChild(create_inline_div("<a target='_blank' href='" + youtube_url + "'>" + title + "</a>", "room_list_title"));
         div_container.appendChild(create_inline_div("[" + length_to_time(length) + "]", "room_song_time"));
         div_container.appendChild(create_inline_div("(" + user_name + ")", "", added_by_email));
+        if (copy && copy == "1") {
+            div_container.appendChild(create_inline_div("(duplication, added by Radio)", "item_inline_copy"));
+        }
         if (skip_reason && skip_reason != "played") {
             div_container.appendChild(create_inline_div("(" + skip_reason + ")", "item_inline_skipreason"));
         }

@@ -120,3 +120,7 @@ body {
 .item_inline_skipreason {
   color: rgb(255, 121, 121);
 }
+
+.item_inline_copy {
+  color: rgb(175, 26, 216);
+}
