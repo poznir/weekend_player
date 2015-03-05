@@ -71,8 +71,9 @@ if ($task == "client") {
     $room = $Rooms->get_room($room_id);
     $radio = $Rooms->clean_variable($_POST["radio"]);
     if (is_numeric($radio) && ($radio == 0 || $radio == 1)) {
+      $original_radio_state = $room->get_admin_random_radio();
       $room->set_admin_random_radio($radio);
-      if ($room->get_playlist_next_song() === false) {
+      if ($room->get_playlist_next_song() === false && $original_radio_state == "0") {
           // TODO:
           // this can cause sometimes the last playing song to be cut and move to rnadom song,
           // but it's ok for now.. will be fixed later on
