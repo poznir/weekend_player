@@ -175,7 +175,7 @@ class Room {
     }
     $count = intval($row["cc"]);
     $random_offset = mt_rand(0, $count - 1);
-    $sql = "select id as cc from weekendv2_playlist where room_id='{$this->get_id()}' AND copy='0' AND skip_reason='played' AND id < {$this->get_currently_playing_id()} LIMIT {$random_offset},1";
+    $sql = "select id from weekendv2_playlist where room_id='{$this->get_id()}' AND copy='0' AND skip_reason='played' AND id < {$this->get_currently_playing_id()} LIMIT {$random_offset},1";
     $result = $this->db->query($sql);
     if (!$result) {
       return false;
