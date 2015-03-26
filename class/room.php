@@ -165,7 +165,7 @@ class Room {
 
   public function get_random_song() {
     // get random song and it must be different then the last played one.
-    $sql = "select id from weekendv2_playlist where room_id='{$this->get_id()}' AND copy='0' AND skip_reason='played' AND id < {$this->get_currently_playing_id()} ORDER BY RAND() LIMIT 1";
+    $sql = "select count(id) as cc from weekendv2_playlist where room_id='{$this->get_id()}' AND copy='0' AND skip_reason='played' AND id < {$this->get_currently_playing_id()}";
     $result = $this->db->query($sql);
     if (!$result) {
       return false;
@@ -173,6 +173,17 @@ class Room {
     if (!$row = $this->db->fetch($result)) {
       return false;
     }
+    $count = intval($row["cc"]);
+    $random_offset = mt_rand(0, $count - 1);
+    $sql = "select id as cc from weekendv2_playlist where room_id='{$this->get_id()}' AND copy='0' AND skip_reason='played' AND id < {$this->get_currently_playing_id()} LIMIT {$random_offset},1";
+    $result = $this->db->query($sql);
+    if (!$result) {
+      return false;
+    }
+    if (!$row = $this->db->fetch($result)) {
+      return false;
+    }
+
     return $row["id"];
   }
 
