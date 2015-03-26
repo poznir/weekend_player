@@ -15,3 +15,4 @@
 [V] * room list - number of users connected to the room right now.
 [V] * Play history songs option as radio in the room (random)
 [V] * Shared volume for the admin player
+[V] * better random (moved the radio random to php instead of mysql Rand)
