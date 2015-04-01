@@ -110,6 +110,10 @@ class Room {
     }
     $list = array();
     while ($row = $this->db->fetch($result)) {
+      //get votes for each item
+      $song_id = $row["id"];
+      $vote = $this->db->fetch($this->db->query("SELECT IFNULL(SUM(value), 0) AS total FROM weekendv2_votes WHERE song_id = $song_id"));
+      $row['votes'] = $vote['total'];
       $list[] = $row;
     }
     $list = array_reverse($list);
