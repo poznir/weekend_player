@@ -24,7 +24,7 @@ is_room_admin = <?=($Users->get_auth_email() == $room->get_owner_email() ? "true
 room_id = "<?=$room_id?>";
 </script>
 
-<div class="pinpoint_rulez">Pinpoint <s>Rulez</s> Suckz.</div>
+<div class="pinpoint_rulez">Pinpoint Rulez.</div>
 
 <div class="room_container">
 
