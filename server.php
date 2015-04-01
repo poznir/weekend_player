@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "startup.php";
 if (!$Users->is_auth()) {
   header('Location: login.php');
@@ -34,9 +34,7 @@ if ($task == "report") {
       $room->set_next_song($Playlist);
       break;
   }
-  send_data((object)[
-    "room_id" => $room_id
-  ]);
+  send_data((object)["room_id" => $room_id]);
 }
 
 if ($task == "chat") {

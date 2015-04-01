@@ -324,8 +324,12 @@ function redraw_list(div, list, inc_counter) {
     buttons += '<a href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" onclick="vote_video(' + song_id + ', 1)"></span></a>';
     buttons += ' (' + votes + ') ';
     buttons += '<a href="#"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" onclick="vote_video(' + song_id + ', -1)"></span></a>';
-    buttons += ' | ';
-    buttons += '<a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="remove_video(' + song_id + ')"></span></a>';
+
+    if (is_room_admin) {
+        buttons += ' | ';
+        buttons += '<a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="remove_video(' + song_id + ')"></span></a>';
+    }
+
     div_container.appendChild(create_inline_div(buttons));
 
         div.appendChild(div_container);
