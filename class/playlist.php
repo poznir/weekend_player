@@ -33,7 +33,7 @@ class Playlist {
 
   public function remove_item($song_id) {
     $song_id = $this->db->safe($song_id);
-    $this->db->query("update weekendv2_playlist SET skip_reason='deleted' where id='{$song_id}' LIMIT 1");
+    $this->db->query("UPDATE weekendv2_playlist SET skip_reason='deleted' WHERE id='{$song_id}' LIMIT 1");
   }
 
   public function add_item($room_id, $v, $title, $length, $added_by_email) {
