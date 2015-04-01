@@ -184,15 +184,17 @@ function parsePollingData(data) {
 }
 
 function update_stats(data) {
-    var string = "";
+    var content = "";
     for (var i in data) {
         var name = data[i]["name"],
             total = data[i]["total_uploaded"];
 
-        string = "Name: " + name + " with total " + total + "songs";
+        content += "<tr><td>" + name + "</td><td>" + total + "</td></tr>";
 
     }
-    $("#stats_contributers").text(string);
+
+    var string = "<!-- Table --><table class='table'><thead><tr><th>Name</th><th>Total</th></tr></thead><tbody>" + content + "</tbody></table>";
+    $("#stats_contributers").html(string);
 }
 
 function redraw_admin_volume(volume) {
@@ -291,7 +293,7 @@ function redraw_members_list(members) {
 
     for (var i in members) {
         var one = members[i];
-        var li = $("<li>")[0];
+        var li = $("<li class='list-group-item'>")[0];
         li.innerText = li.textContent = one["member_name"];
         li.title = one["member_email"] + " (last update before " + one["last_update"] + " seconds)";
         container.appendChild(li);

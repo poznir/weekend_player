@@ -28,24 +28,29 @@ room_id = "<?=$room_id?>";
 
 <div class="room_container">
 
-<!--   <div id="chat" class="chat">
-      <input id="chat_msg" class="form-control" style="width: 500px;display:inline;" required autofocus>
-      <button class="btn btn-lg btn-primary" type="button" onclick="send_chat()">Add</button>
-  </div>
- -->
-  <div id="stats" class="stats">
-    <h2>Top Contributers</h2>
-    <div id="stats_contributers">
-    </div>
+<div class="stats" id="stats-container">
+  <div class="panel panel-default">
+    <div class="panel-heading">Top Contributers</div>
+      <div id="stats_contributers">
+      </div>
   </div>
 
+  <div class="panel panel-default">
+    <div class="panel-heading">Chat</div>
+    <div class="panel-body" id="chat-container"></div>
+  </div>
+</div>
+
   <div class="room_panels">
-    <div class="room_panel">
-      <div class="room_panel_head">Shared volume (<span id="admin_volume_count">100</span>):</div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Shared volume (<span id="admin_volume_count">100</span>):</div>
+      <div class="panel-body">
       <input type="range" class="admin_volume_slider" id="player_admin_volume_slider" min="0" max="100" value="100" step="1" onchange="set_admin_volume(this.value)">
     </div>
-    <div class="room_panel">
-      <div class="room_panel_head">Shared Radio state (<span id="admin_radio_state">Off</span>):</div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Shared Radio state (<span id="admin_radio_state">Off</span>):</div>
+      <div class="panel-body">
       <input type="radio" class="admin_radio_state" id="player_admin_radio_stateOff" name="player_admin_radio_state" value="0" checked="checked" onchange="set_admin_radio(this.value)" />
       <label for="0">Off</label>
       <input type="radio" class="admin_radio_state" id="player_admin_radio_stateOn" name="player_admin_radio_state" value="1" onchange="set_admin_radio(this.value)" />
@@ -55,13 +60,17 @@ room_id = "<?=$room_id?>";
           text-align: center;
       ">( play random songs from the history when the list is empty, this is a shared option and not private. )</div>
     </div>
-    <div class="room_panel">
-      <div class="room_panel_head">Player size (1-3):</div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Player size (1-3):</div>
+      <div class="panel-body">
       <input type="range" class="player_size_slider" min="1" max="3" value="1" step="1" onchange="set_player_size(this.value)">
     </div>
-    <div class="room_panel">
-      <div class="room_panel_head">room members (<span id="room_members_list_head_count">0</span>):</div>
-      <ul id="room_members_list"></ul>
+    <div class="panel panel-default">
+      <div class="panel-heading">room members (<span id="room_members_list_head_count">0</span>):</div>
+      <div class="panel-body">
+      <ul id="room_members_list" class="list-group"></ul>
+    </div>
     </div>
   </div>
   <div class="room_main">
