@@ -33,6 +33,12 @@ room_id = "<?=$room_id?>";
       <button class="btn btn-lg btn-primary" type="button" onclick="send_chat()">Add</button>
   </div>
  -->
+  <div id="stats" class="stats">
+    <h2>Top Contributers</h2>
+    <div id="stats_contributers">
+    </div>
+  </div>
+
   <div class="room_panels">
     <div class="room_panel">
       <div class="room_panel_head">Shared volume (<span id="admin_volume_count">100</span>):</div>

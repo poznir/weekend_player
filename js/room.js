@@ -178,7 +178,21 @@ function parsePollingData(data) {
     }
     update_lists_info(playlist, history, members);
     redraw_admin_volume(data["admin_volume"]);
+    console.log(data);
+    update_stats(data["stats"]);
     redraw_admin_radio(data["admin_radio"]);
+}
+
+function update_stats(data) {
+    var string = "";
+    for (var i in data) {
+        var name = data[i]["name"],
+            total = data[i]["total_uploaded"];
+
+        string = "Name: " + name + " with total " + total + "songs";
+
+    }
+    $("#stats_contributers").text(string);
 }
 
 function redraw_admin_volume(volume) {

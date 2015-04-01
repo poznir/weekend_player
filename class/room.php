@@ -120,6 +120,25 @@ class Room {
     return $list;
   }
 
+  public function get_stats() {
+    $room_id = $this->get_id();
+    $query = "SELECT weekendv2_users.id, name, email, COUNT(*) AS total_uploaded
+              FROM weekendv2_playlist
+              JOIN weekendv2_users ON added_by_email = email
+              GROUP BY email
+              ORDER BY total_uploaded DESC
+              LIMIT 10";
+    $result = $this->db->query($query);
+    if (!$result) {
+      return array();
+    }
+    $list = array();
+    while ($row = $this->db->fetch($result)) {
+      $list[] = $row;
+    }
+    return $list;
+  }
+
   public function get_chat() {
     $room_id = $this->get_id();
     $result = $this->db->query("SELECT * FROM weekendv2_chat WHERE room_id = $room_id ORDER BY timestamp DESC LIMIT 20");
