@@ -1,4 +1,4 @@
-<?
+<?php
 require_once "startup.php";
 $error_message = "";
 if (!$Users->is_auth()) {
@@ -15,9 +15,6 @@ if (!$Rooms->room_exists_by_id($room_id)) {
 $room = $Rooms->get_room($room_id);
 
 require("header.php");
-echo "<div>";
-print_r($_SESSION);
-echo "</div>";
 ?>
 <script src="/js/room.js"></script>
 <script src="/js/chat.js"></script>
