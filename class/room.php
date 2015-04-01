@@ -88,6 +88,10 @@ class Room {
     }
     $list = array();
     while ($row = $this->db->fetch($result)) {
+      //get votes for each item
+      $song_id = $row["id"];
+      $vote = $this->db->fetch($this->db->query("SELECT IFNULL(SUM(value), 0) AS total FROM weekendv2_votes WHERE song_id = $song_id"));
+      $row['votes'] = $vote['total'];
       $list[] = $row;
     }
 
@@ -104,6 +108,19 @@ class Room {
       $list[] = $row;
     }
     $list = array_reverse($list);
+    return $list;
+  }
+
+  public function get_chat() {
+    $room_id = $this->get_id();
+    $result = $this->db->query("SELECT * FROM weekendv2_chat WHERE room_id = $room_id ORDER BY timestamp DESC LIMIT 20");
+    if (!$result) {
+      return array();
+    }
+    $list = array();
+    while ($row = $this->db->fetch($result)) {
+      $list[] = $row;
+    }
     return $list;
   }
 

@@ -9,10 +9,31 @@ class Playlist {
     $this->db->query("update weekendv2_playlist SET skip_reason='{$safe_reason}' where id='{$id}' LIMIT 1");
   }
 
+  public function get_user_id_by_email($email) {
+    $safe_reason = $this->db->safe($email);
+    $result = $this->db->query("SELECT id FROM weekendv2_users WHERE email='$email' LIMIT 1");
+    $row = $this->db->fetch($result);
+    return $row['id'];
+  }
+
   public function add_copy($id) {
     $id = $this->db->safe($id);
     $this->db->query("INSERT INTO weekendv2_playlist (room_id, v, title, length, added_by_email, copy) SELECT room_id, v, title, length, added_by_email, '1' as copy FROM weekendv2_playlist WHERE id='{$id}' limit 1");
     return $this->db->last_id();
+  }
+
+  public function vote_item($song_id, $vote, $user_email) {
+    $song_id = $this->db->safe($song_id);
+    $user_email = $this->db->safe($user_email);
+    $user_id = $this->get_user_id_by_email($user_email);
+    $vote = $this->db->safe($vote) === "1" ? 1 : -1 ;
+    $sql = "INSERT INTO weekendv2_votes (song_id,user_id, value) VALUES ($song_id, $user_id, $vote) ON DUPLICATE KEY UPDATE value = $vote";
+    $this->db->query($sql);
+  }
+
+  public function remove_item($song_id) {
+    $song_id = $this->db->safe($song_id);
+    $this->db->query("update weekendv2_playlist SET skip_reason='deleted' where id='{$song_id}' LIMIT 1");
   }
 
   public function add_item($room_id, $v, $title, $length, $added_by_email) {

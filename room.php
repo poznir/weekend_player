@@ -15,17 +15,27 @@ if (!$Rooms->room_exists_by_id($room_id)) {
 $room = $Rooms->get_room($room_id);
 
 require("header.php");
+echo "<div>";
+print_r($_SESSION);
+echo "</div>";
 ?>
-<script src="room.js"></script>
+<script src="/js/room.js"></script>
+<script src="/js/chat.js"></script>
 <script>
 /* don't worry it wont help you hack the room, just to save IO */
 is_room_admin = <?=($Users->get_auth_email() == $room->get_owner_email() ? "true" : "false")?>;
 room_id = "<?=$room_id?>";
 </script>
 
-<div class="pinpoint_rulez">Pinpoint Rulez.</div>
+<div class="pinpoint_rulez">Pinpoint <s>Rulez</s> Suckz.</div>
 
 <div class="room_container">
+
+<!--   <div id="chat" class="chat">
+      <input id="chat_msg" class="form-control" style="width: 500px;display:inline;" required autofocus>
+      <button class="btn btn-lg btn-primary" type="button" onclick="send_chat()">Add</button>
+  </div>
+ -->
   <div class="room_panels">
     <div class="room_panel">
       <div class="room_panel_head">Shared volume (<span id="admin_volume_count">100</span>):</div>

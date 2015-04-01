@@ -297,8 +297,10 @@ function redraw_list(div, list, inc_counter) {
         inc_counter ? counter++ : counter--;
         var v = one["v"];
         var title = one["title"];
+        var song_id = one["id"];
         var added_by_email = one["added_by_email"];
         var datetime = one["datetime"];
+        var votes = one["votes"];
         var skip_reason = one["skip_reason"];
         var user_name = one["user_name"];
         var length = one["length"];
@@ -316,6 +318,16 @@ function redraw_list(div, list, inc_counter) {
         if (skip_reason && skip_reason != "played") {
             div_container.appendChild(create_inline_div("(" + skip_reason + ")", "item_inline_skipreason"));
         }
+    //add votes
+    var buttons = "";
+    buttons += ' | ';
+    buttons += '<a href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" onclick="vote_video(' + song_id + ', 1)"></span></a>';
+    buttons += ' (' + votes + ') ';
+    buttons += '<a href="#"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" onclick="vote_video(' + song_id + ', -1)"></span></a>';
+    buttons += ' | ';
+    buttons += '<a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="remove_video(' + song_id + ')"></span></a>';
+    div_container.appendChild(create_inline_div(buttons));
+
         div.appendChild(div_container);
     }
 }
@@ -379,6 +391,42 @@ function admin_report(kind, reason) {
         },
         success: function(data) {
             // no return data
+        },
+        dataType: "json",
+        timeout: 60000
+    });
+}
+
+function remove_video(video_id) {
+    $.ajax({
+        url: "server.php?" + generate_ajax_key(),
+        type: "POST",
+        data: {
+            "id": room_id,
+            "video_id": video_id,
+            "task": "client",
+            "kind": "remove"
+        },
+        success: function(data) {
+            doPolling();
+        },
+        dataType: "json",
+        timeout: 60000
+    });
+}
+
+function vote_video(video_id, vote) {
+    $.ajax({
+        url: "server.php?" + generate_ajax_key(),
+        type: "POST",
+        data: {
+            "id": room_id,
+            "video_id": video_id,
+            "vote": vote,
+            "task": "client",
+            "kind": "vote"
+        },
+        success: function(data) {
         },
         dataType: "json",
         timeout: 60000

@@ -39,8 +39,37 @@ if ($task == "report") {
   ]);
 }
 
+if ($task == "chat") {
+  $room = $Rooms->get_room($room_id);
+  switch ($kind) {
+    case 'add':
+      $text = $_POST["text"];
+      $Chat->add($text);
+      break;
+    case 'delete':
+      break;
+  }
+}
+
 if ($task == "client") {
   $result = false;
+  if ($kind == "vote") {
+    $room = $Rooms->get_room($room_id);
+    $video_id = $Rooms->clean_variable($_POST["video_id"]);
+    $vote = $Rooms->clean_variable($_POST["vote"]);
+    $Playlist->vote_item($video_id, $vote, $Users->get_auth_email());
+    $result = true;
+    $room->generate_update_version();
+  }
+
+  if ($kind == "remove") {
+    $room = $Rooms->get_room($room_id);
+    $video_id = $Rooms->clean_variable($_POST["video_id"]);
+    $Playlist->remove_item($video_id);
+    $result = true;
+    $room->generate_update_version();
+  }
+
   if ($kind == "add") {
     $room = $Rooms->get_room($room_id);
     $video_id = $Rooms->clean_variable($_POST["video_id"]);
@@ -110,6 +139,7 @@ function fetch_data($room) {
     "currently_playing_id" => $room->get_currently_playing_id(),
     "playlist" => $room->get_playlist(),
     "history" => $room->get_history(),
+    "chat" => $room->get_chat(),
     "members" => get_members_list($room),
     "admin_volume" => get_admin_volume($room),
     "admin_radio" => get_admin_radio($room),
@@ -161,6 +191,7 @@ while (!is_timeout($start_time, $config_server_poll_max_executing_time)) {
       "currently_playing_id" => $data["currently_playing_id"],
       "playlist" => $data["playlist"],
       "history" => $data["history"],
+      "chat" => $data["chat"],
       "members" => $data["members"],
       "admin_volume" => $data["admin_volume"],
       "admin_radio" => $data["admin_radio"]
