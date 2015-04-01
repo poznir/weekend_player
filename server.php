@@ -139,7 +139,7 @@ function fetch_data($room) {
     "currently_playing_id" => $room->get_currently_playing_id(),
     "playlist" => $room->get_playlist(),
     "history" => $room->get_history(),
-//    "chat" => $room->get_chat(),
+    "chat" => $room->get_chat(),
     "members" => get_members_list($room),
     "admin_volume" => get_admin_volume($room),
     "admin_radio" => get_admin_radio($room),
@@ -191,7 +191,7 @@ while (!is_timeout($start_time, $config_server_poll_max_executing_time)) {
       "currently_playing_id" => $data["currently_playing_id"],
       "playlist" => $data["playlist"],
       "history" => $data["history"],
-//      "chat" => $data["chat"],
+      "chat" => $data["chat"],
       "members" => $data["members"],
       "admin_volume" => $data["admin_volume"],
       "admin_radio" => $data["admin_radio"]
