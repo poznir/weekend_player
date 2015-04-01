@@ -124,3 +124,22 @@ body {
 .item_inline_copy {
   color: rgb(175, 26, 216);
 }
+
+.glyphicon-thumbs-up {
+  color: green;
+}
+
+.glyphicon-thumbs-down {
+  color: red;
+}
+
+.glyphicon-remove {
+  color: red;
+}
+
+.chat {
+  float: right;
+  width: 400px;
+  height: 800px;
+  outline: 1px solid green;
+}

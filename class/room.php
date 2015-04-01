@@ -82,12 +82,21 @@ class Room {
   }
 
   public function get_playlist() {
-    $result = $this->db->query("select weekendv2_playlist.*,weekendv2_users.name as user_name from weekendv2_playlist left join weekendv2_users on (weekendv2_users.email=weekendv2_playlist.added_by_email) where weekendv2_playlist.room_id='{$this->get_id()}' AND weekendv2_playlist.id>='{$this->get_currently_playing_id()}' order by weekendv2_playlist.id");
+    $result = $this->db->query("select weekendv2_playlist.*,weekendv2_users.name as user_name from weekendv2_playlist
+      left join weekendv2_users on (weekendv2_users.email=weekendv2_playlist.added_by_email)
+      WHERE weekendv2_playlist.room_id='{$this->get_id()}'
+      AND weekendv2_playlist.id>='{$this->get_currently_playing_id()}'
+      AND skip_reason IS NULL
+      ORDER BY weekendv2_playlist.id");
     if (!$result) {
       return array();
     }
     $list = array();
     while ($row = $this->db->fetch($result)) {
+      //get votes for each item
+      $song_id = $row["id"];
+      $vote = $this->db->fetch($this->db->query("SELECT IFNULL(SUM(value), 0) AS total FROM weekendv2_votes WHERE song_id = $song_id"));
+      $row['votes'] = $vote['total'];
       $list[] = $row;
     }
 
@@ -104,6 +113,19 @@ class Room {
       $list[] = $row;
     }
     $list = array_reverse($list);
+    return $list;
+  }
+
+  public function get_chat() {
+    $room_id = $this->get_id();
+    $result = $this->db->query("SELECT * FROM weekendv2_chat WHERE room_id = $room_id ORDER BY timestamp DESC LIMIT 20");
+    if (!$result) {
+      return array();
+    }
+    $list = array();
+    while ($row = $this->db->fetch($result)) {
+      $list[] = $row;
+    }
     return $list;
   }
 
