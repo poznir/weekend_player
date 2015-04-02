@@ -87,7 +87,7 @@
         <div class="panel-body" id="playlist-container">
 
           <table class="table table-hover" id="history-table">
-            <tbody>
+            <tbody id="history-table-data">
             </tbody>
           </table>
 
