@@ -189,7 +189,7 @@ while (!is_timeout($start_time, $config_server_poll_max_executing_time)) {
       "currently_playing_id" => $data["currently_playing_id"],
       "playlist" => $data["playlist"],
       "history" => $data["history"],
-      "stats" => $room->get_stats(),
+      "stats" => $data["stats"],
       "members" => $data["members"],
       "admin_volume" => $data["admin_volume"],
       "admin_radio" => $data["admin_radio"]
