@@ -338,7 +338,7 @@ function redraw_list(div, list, inc_counter) {
     var buttons = "";
     buttons += ' | ';
     buttons += '<a href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" onclick="vote_video(' + song_id + ', 1)"></span></a>';
-    buttons += ' (' + votes + ') ';
+    buttons += ' <span class="badge">' + votes + '</span> ';
     buttons += '<a href="#"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" onclick="vote_video(' + song_id + ', -1)"></span></a>';
 
     if (is_room_admin) {

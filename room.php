@@ -29,26 +29,26 @@ room_id = "<?=$room_id?>";
 <div class="room_container">
 
 <div class="stats" id="stats-container">
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading">Top Contributers</div>
       <div id="stats_contributers">
       </div>
   </div>
 
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading">Chat</div>
     <div class="panel-body" id="chat-container"></div>
   </div>
 </div>
 
   <div class="room_panels">
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">Shared volume (<span id="admin_volume_count">100</span>):</div>
       <div class="panel-body">
       <input type="range" class="admin_volume_slider" id="player_admin_volume_slider" min="0" max="100" value="100" step="1" onchange="set_admin_volume(this.value)">
     </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">Shared Radio state (<span id="admin_radio_state">Off</span>):</div>
       <div class="panel-body">
       <input type="radio" class="admin_radio_state" id="player_admin_radio_stateOff" name="player_admin_radio_state" value="0" checked="checked" onchange="set_admin_radio(this.value)" />
@@ -61,22 +61,25 @@ room_id = "<?=$room_id?>";
       ">( play random songs from the history when the list is empty, this is a shared option and not private. )</div>
     </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">Player size (1-3):</div>
       <div class="panel-body">
-      <input type="range" class="player_size_slider" min="1" max="3" value="1" step="1" onchange="set_player_size(this.value)">
+        <input type="range" class="player_size_slider" min="1" max="3" value="1" step="1" onchange="set_player_size(this.value)">
+      </div>
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-primary">
       <div class="panel-heading">room members (<span id="room_members_list_head_count">0</span>):</div>
       <div class="panel-body">
-      <ul id="room_members_list" class="list-group"></ul>
-    </div>
+        <ul id="room_members_list" class="list-group"></ul>
+      </div>
     </div>
   </div>
   <div class="room_main">
-    <h4><a href="index.php">Back to room list</a></span></h4>
+    <ol class="breadcrumb">
+      <li><a href="/">Home</a></li>
+      <li class="active">Room: <?=$room->get_name()?></li>
+    </ol>
 
-    <h1 style="text-decoration: underline;">Room: <?=$room->get_name()?></h1>
     <h4>History (10 last videos):</h4>
     <div id="div_history"></div>
     <h4>Currently playing: <span id="current_song_title"></span></h4>
