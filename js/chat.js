@@ -1,6 +1,15 @@
+(function($) {
+    $.sanitize = function(input) {
+        var output = input.replace(/<script[^>]*?>.*?<\/script>/gi, '').
+                     replace(/<[\/\!]*?[^<>]*?>/gi, '').
+                     replace(/<style[^>]*?>.*?<\/style>/gi, '').
+                     replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '');
+        return output;
+    };
+})(jQuery);
+
 var Chat = {
     getInfo: function () {
-        console.log('weee');
     },
 
     doPolling: function () {
@@ -31,15 +40,13 @@ var Chat = {
     parsePollingData: function (data) {
         if (!data || data["timeout"] == true) {
             if (data) {
-                if (data["members"]) {
-                    redraw_members_list(data["members"]);
+                if (data["chat"]) {
+                    update_chat(data["chat"]);
                 }
             }
             return;
         }
         var chat_history = data["chat"];
-        console.log(chat_history);
-
     },
 
     send_chat: function (text) {
@@ -58,5 +65,33 @@ var Chat = {
             dataType: "json",
             timeout: 60000
         });
+    },
+
+    update_chat: function (list) {
+        var table_row = "";
+        for (var i in list) {
+            var one = list[i];
+            var id = one["id"];
+            var text = one["text"];
+            var user_name = one["name"];
+            var time = one["timestamp"];
+
+        text = $.sanitize(text);
+        table_row += "<tr>" +
+        "<td>" + time + "</td>" +
+        "<td>" + user_name + "</td>" +
+        "<td>" + text + "</td>" +
+        "</tr>";
+        // table_row += "<tr" + tr_class + ">" +
+        //     "<td>" + title + "</td><td>" + length_to_time(length) + "</td><td>" + user_name + "</td>" +
+        //     "<td>" +
+        //       "<a href='#'><span class='glyphicon glyphicon-thumbs-up' aria-hidden='true' onclick='vote_video(" + song_id + ", 1)'></span></a>" +
+        //       " <span class='badge'>" + votes + "</span> " +
+        //       "<a href='#'><span class='glyphicon glyphicon-thumbs-down' aria-hidden='true' onclick='vote_video(" + song_id + ", -1)'></span></a>" +
+        //     "</td>" +
+        //   "</tr>";
+
+        }
+        $("#chat-table-data").html(table_row);
     }
 }

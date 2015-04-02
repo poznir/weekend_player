@@ -40,7 +40,7 @@
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#now-playing" aria-controls="now-playing" role="tab" data-toggle="tab">Playlist</a></li>
-    <li role="presentation"><a href="#chat" aria-controls="chat" role="tab" data-toggle="tab">Chat</a></li>
+    <li role="presentation"><a href="#chat" aria-controls="chat" role="tab" data-toggle="tab">Chat <span id="chat_message_count" class="badge">0</span></a></li>
     <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
   </ul>
 
@@ -50,6 +50,17 @@
     </div><!-- end of tab-pane -->
 
     <div role="tabpanel" class="tab-pane" id="chat">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Chat</div>
+        <div class="panel-body" id="chat-container">
+
+          <table class="table table-hover" id="chat-table">
+            <tbody id="chat-table-data">
+            </tbody>
+          </table>
+
+        </div><!-- end of panel body -->
+      </div><!-- end of panel -->
     </div><!-- end of tab-pane -->
 
     <div role="tabpanel" class="tab-pane" id="settings">

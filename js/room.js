@@ -168,6 +168,13 @@ function parsePollingData(data) {
         }
         return;
     }
+
+    // Need to move it to outer, more general controller
+    if (data["chat"]) {
+        Chat.update_chat(data["chat"]);
+    }
+
+
     DT_update_version = data["update_version"];
     var currently_playing_id = data["currently_playing_id"];
     var playlist = data["playlist"];
