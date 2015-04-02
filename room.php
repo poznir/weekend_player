@@ -34,6 +34,54 @@ room_id = "<?=$room_id?>";
 
   <div class="row">
     <div class="col-xs-12 col-md-8">
+
+<div role="tabpanel">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#now-playing" aria-controls="now-playing" role="tab" data-toggle="tab">Playlist</a></li>
+    <li role="presentation"><a href="#chat" aria-controls="chat" role="tab" data-toggle="tab">Chat</a></li>
+    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane" id="now-playing">
+    </div><!-- end of tab-pane -->
+
+    <div role="tabpanel" class="tab-pane" id="chat">
+    </div><!-- end of tab-pane -->
+
+    <div role="tabpanel" class="tab-pane" id="settings">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Shared volume (<span id="admin_volume_count">100</span>):</div>
+        <div class="panel-body">
+        <input type="range" class="admin_volume_slider" id="player_admin_volume_slider" min="0" max="100" value="100" step="1" onchange="set_admin_volume(this.value)">
+      </div>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Shared Radio state (<span id="admin_radio_state">Off</span>):</div>
+        <div class="panel-body">
+        <input type="radio" class="admin_radio_state" id="player_admin_radio_stateOff" name="player_admin_radio_state" value="0" checked="checked" onchange="set_admin_radio(this.value)" />
+        <label for="0">Off</label>
+        <input type="radio" class="admin_radio_state" id="player_admin_radio_stateOn" name="player_admin_radio_state" value="1" onchange="set_admin_radio(this.value)" />
+        <label for="1">On</label>
+        <div style="
+            font-size: 9pt;
+            text-align: center;
+        ">( play random songs from the history when the list is empty, this is a shared option and not private. )</div>
+      </div>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">Player size (1-3):</div>
+        <div class="panel-body">
+          <input type="range" class="player_size_slider" min="1" max="3" value="1" step="1" onchange="set_player_size(this.value)">
+        </div>
+      </div>
+    </div><!-- end of tab-pane -->
+
+  </div> <!-- end of tab content -->
+</div><!-- end of tab-panel -->
+
       <div class="panel panel-primary">
         <div class="panel-heading">Playlist</div>
         <div class="panel-body" id="playlist-container">
@@ -84,31 +132,6 @@ room_id = "<?=$room_id?>";
 
 
   <div class="room_panels">
-    <div class="panel panel-primary">
-      <div class="panel-heading">Shared volume (<span id="admin_volume_count">100</span>):</div>
-      <div class="panel-body">
-      <input type="range" class="admin_volume_slider" id="player_admin_volume_slider" min="0" max="100" value="100" step="1" onchange="set_admin_volume(this.value)">
-    </div>
-    </div>
-    <div class="panel panel-primary">
-      <div class="panel-heading">Shared Radio state (<span id="admin_radio_state">Off</span>):</div>
-      <div class="panel-body">
-      <input type="radio" class="admin_radio_state" id="player_admin_radio_stateOff" name="player_admin_radio_state" value="0" checked="checked" onchange="set_admin_radio(this.value)" />
-      <label for="0">Off</label>
-      <input type="radio" class="admin_radio_state" id="player_admin_radio_stateOn" name="player_admin_radio_state" value="1" onchange="set_admin_radio(this.value)" />
-      <label for="1">On</label>
-      <div style="
-          font-size: 9pt;
-          text-align: center;
-      ">( play random songs from the history when the list is empty, this is a shared option and not private. )</div>
-    </div>
-    </div>
-    <div class="panel panel-primary">
-      <div class="panel-heading">Player size (1-3):</div>
-      <div class="panel-body">
-        <input type="range" class="player_size_slider" min="1" max="3" value="1" step="1" onchange="set_player_size(this.value)">
-      </div>
-    </div>
     <div class="panel panel-primary">
       <div class="panel-heading">room members (<span id="room_members_list_head_count">0</span>):</div>
       <div class="panel-body">

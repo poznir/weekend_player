@@ -87,7 +87,7 @@ class Room {
       WHERE weekendv2_playlist.room_id='{$this->get_id()}'
       AND weekendv2_playlist.id>='{$this->get_currently_playing_id()}'
       AND skip_reason IS NULL
-      ORDER BY weekendv2_playlist.id");
+      ORDER BY weekendv2_playlist.id DESC");
     if (!$result) {
       return array();
     }
@@ -104,7 +104,7 @@ class Room {
   }
 
   public function get_history() {
-    $result = $this->db->query("select weekendv2_playlist.*,weekendv2_users.name as user_name from weekendv2_playlist left join weekendv2_users on (weekendv2_users.email=weekendv2_playlist.added_by_email) where weekendv2_playlist.room_id='{$this->get_id()}' AND weekendv2_playlist.id<'{$this->get_currently_playing_id()}' order by weekendv2_playlist.id desc limit 10");
+    $result = $this->db->query("select weekendv2_playlist.*,weekendv2_users.name as user_name from weekendv2_playlist left join weekendv2_users on (weekendv2_users.email=weekendv2_playlist.added_by_email) where weekendv2_playlist.room_id='{$this->get_id()}' AND weekendv2_playlist.id<'{$this->get_currently_playing_id()}' order by weekendv2_playlist.id desc limit 20");
     if (!$result) {
       return array();
     }
@@ -116,7 +116,7 @@ class Room {
       $row['votes'] = $vote['total'];
       $list[] = $row;
     }
-    $list = array_reverse($list);
+//    $list = array_reverse($list);
     return $list;
   }
 
@@ -127,7 +127,7 @@ class Room {
               JOIN weekendv2_users ON added_by_email = email
               GROUP BY email
               ORDER BY total_uploaded DESC
-              LIMIT 10";
+              LIMIT 3";
     $result = $this->db->query($query);
     if (!$result) {
       return array();

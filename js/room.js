@@ -272,7 +272,7 @@ function update_lists_info(playlist, history, members) {
     redraw_list($("#div_history")[0], history, false);
     redraw_list($("#div_playlist")[0], playlist, true);
 
-    create_table_data($("#history-table")[0], history.concat(playlist));
+    create_table_data($("#history-table")[0], playlist.concat(history));
 
     redraw_members_list(members);
 }
