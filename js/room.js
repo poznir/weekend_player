@@ -19,6 +19,9 @@ var player;
 $(document).ready(function() {
 //    $('#history-table').dataTable();
 } );
+var Room = {
+    members: []
+};
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
@@ -169,11 +172,16 @@ function parsePollingData(data) {
         return;
     }
 
-    // Need to move it to outer, more general controller
+    //TODO: Need to move it to outer, more general controller
     if (data["chat"]) {
         Chat.update_chat(data["chat"]);
     }
 
+    if (data["members"]) {
+        //TODO: fix this
+        Room.members = data["members"];
+        Chat.update_online_users(Room.members);
+    }
 
     DT_update_version = data["update_version"];
     var currently_playing_id = data["currently_playing_id"];

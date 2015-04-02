@@ -59,8 +59,12 @@
             </tbody>
           </table>
 
-          <input id="chat-text" class="form-control" required autofocus />
+          <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></div>
+            <input id="chat-text" class="form-control" required autofocus placeholder="Be nice or go away" />
+          </div>
         </div><!-- end of panel body -->
+        <div class="panel-footer"><span class="small itallic" id="chat-online-list"></span></div>
       </div><!-- end of panel -->
     </div><!-- end of tab-pane -->
 

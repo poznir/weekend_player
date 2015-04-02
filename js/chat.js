@@ -11,6 +11,8 @@
 
 $(document).ready(function() {
     $('#chat-text').keypress(function(event) { if (event.keyCode == 13) {
+        //TODO: better validation
+        if ($('#chat-text').val().length < 1) { return;}
         Chat.send_chat($('#chat-text').val());
         $('#chat-text').val('');
     }});
@@ -18,6 +20,7 @@ $(document).ready(function() {
 
 
 var Chat = {
+    last_message: "",
     getInfo: function () {
     },
 
@@ -76,6 +79,15 @@ var Chat = {
         });
     },
 
+    update_online_users: function (list) {
+        var member_list = [];
+        for (var i in list) {
+            member_list.push(list[i]['member_name']);
+        }
+        member_list = member_list.join(", ");
+        $("#chat-online-list").text(" Online: " + member_list);
+    },
+
     update_chat: function (list) {
         var table_row = "";
         for (var i in list) {
@@ -85,7 +97,10 @@ var Chat = {
             var user_name = one["name"];
             var time = one["timestamp"];
 
-        date = new Date(time);
+        //TODO: fix date
+        //date = new Date(time);
+        date = time;
+
         text = $.sanitize(text);
         table_row += "<tr>" +
         "<td>" + date + "</td>" +
