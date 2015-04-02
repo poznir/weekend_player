@@ -39,6 +39,7 @@ body {
 
 .room_container {
   position: relative;
+  display: none;
 }
 
 .room_panels {

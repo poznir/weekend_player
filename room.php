@@ -24,18 +24,64 @@ is_room_admin = <?=($Users->get_auth_email() == $room->get_owner_email() ? "true
 room_id = "<?=$room_id?>";
 </script>
 
+
+<div class="container-fluid">
+  <!-- navigation -->
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li class="active">Room: <?=$room->get_name()?></li>
+  </ol>
+
+  <div class="row">
+    <div class="col-xs-12 col-md-8">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Playlist</div>
+        <div class="panel-body" id="playlist-container">
+
+          <table class="table table-hover">
+            <tbody id="history-table">
+            </tbody>
+          </table>
+
+        </div><!-- end of panel body -->
+      </div><!-- enf of panel -->
+
+    </div><!--end of main div -->
+
+    <div class="col-xs-6 col-md-4">
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">Add New Link</div>
+          <div class="panel-body">
+            <div id="div_loading_area" class="add_new_form_loading add_new_form_loading_hide"><img src="ajax-loader.gif"></div>
+            <div>Add new (youtube video url):</div>
+            <input id="url_youtube" type="url" class="form-control" placeholder="https://www.youtube.com/watch?v=..." style="width: 500px;display:inline;" required autofocus>
+            <button class="btn btn-lg btn-primary" type="button" onclick="add_youtube_video($('input[id=url_youtube]')[0].value);$('input[id=url_youtube]')[0].value=''">Add</button>
+          </div><!-- panel body -->
+      </div><!-- panel -->
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">Top Contributers</div>
+          <div class="panel-body" id="stats_contributers">
+          </div><!-- panel body -->
+      </div><!-- panel -->
+
+      <div class="panel panel-primary">
+        <div class="panel-heading">Now Playing</div>
+          <div class="panel-body">
+            <div id="player"></div>
+          </div><!-- panel body -->
+      </div><!-- panel -->
+
+    </div><!-- end of sidebar div -->
+  </div><!-- end of row -->
+</div><!-- end of container -->
+
 <div class="pinpoint_rulez">Pinpoint Rulez.</div>
 
 <div class="room_container">
 
-<div class="stats" id="stats-container">
-  <div class="panel panel-primary">
-    <div class="panel-heading">Top Contributers</div>
-      <div id="stats_contributers">
-      </div>
-  </div>
 
-</div>
 
   <div class="room_panels">
     <div class="panel panel-primary">
@@ -69,39 +115,19 @@ room_id = "<?=$room_id?>";
         <ul id="room_members_list" class="list-group"></ul>
       </div>
     </div>
-  </div>
+  </div><!-- end of panels -->
   <div class="room_main">
-    <ol class="breadcrumb">
-      <li><a href="/">Home</a></li>
-      <li class="active">Room: <?=$room->get_name()?></li>
-    </ol>
 
 
-    <h4 class="add_new_form">
-      <div id="div_loading_area" class="add_new_form_loading add_new_form_loading_hide"><img src="ajax-loader.gif"></div>
-      <div>Add new (youtube video url):</div>
-      <input id="url_youtube" type="url" class="form-control" placeholder="https://www.youtube.com/watch?v=..." style="width: 500px;display:inline;" required autofocus>
-      <button class="btn btn-lg btn-primary" type="button" onclick="add_youtube_video($('input[id=url_youtube]')[0].value);$('input[id=url_youtube]')[0].value=''">Add</button>
-    </h4>
 
-  <div class="panel panel-primary">
-    <div class="panel-heading">Playlist</div>
-    <div class="panel-body" id="playlist-container">
-
-      <table class="table table-hover">
-        <tbody id="history-table">
-        </tbody>
-      </table>
-
-    </div>
-  </div>
 
           <h4>History (10 last videos):</h4>
           <div id="div_history"></div>
           <h4>Currently playing: <span id="current_song_title"></span></h4>
-          <div id="player"></div>
           <h4>Playing next:</h4>
           <div id="div_playlist"></div>
+
+
 
           <div class="bottom_spacer"></div>
 

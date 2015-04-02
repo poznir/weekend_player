@@ -18,8 +18,8 @@ var player;
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-        height: '390',
-        width: '640',
+        height: '360',
+        width: '570',
         videoId: 'M7lc1UVf-VE',
         events: {
             'onReady': onPlayerReady,
@@ -307,8 +307,8 @@ function redraw_members_list(members) {
 
 
 function truncate(string){
-   if (string.length > 30)
-      return string.substring(0,30)+'...';
+   if (string.length > 200)
+      return string.substring(0,200) + '...';
    else
       return string;
 }
