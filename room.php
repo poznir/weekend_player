@@ -35,17 +35,6 @@ room_id = "<?=$room_id?>";
       </div>
   </div>
 
-  <div class="panel panel-primary">
-    <div class="panel-heading">Playlist</div>
-    <div class="panel-body" id="playlist-container">
-
-      <table class="table table-hover">
-        <tbody id="history-table">
-        </tbody>
-      </table>
-
-    </div>
-  </div>
 </div>
 
   <div class="room_panels">
@@ -87,10 +76,7 @@ room_id = "<?=$room_id?>";
       <li class="active">Room: <?=$room->get_name()?></li>
     </ol>
 
-    <h4>History (10 last videos):</h4>
-    <div id="div_history"></div>
-    <h4>Currently playing: <span id="current_song_title"></span></h4>
-    <div id="player"></div>
+
     <h4 class="add_new_form">
       <div id="div_loading_area" class="add_new_form_loading add_new_form_loading_hide"><img src="ajax-loader.gif"></div>
       <div>Add new (youtube video url):</div>
@@ -98,9 +84,27 @@ room_id = "<?=$room_id?>";
       <button class="btn btn-lg btn-primary" type="button" onclick="add_youtube_video($('input[id=url_youtube]')[0].value);$('input[id=url_youtube]')[0].value=''">Add</button>
     </h4>
 
-    <h4>Playing next:</h4>
-    <div id="div_playlist"></div>
-    <div class="bottom_spacer"></div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Playlist</div>
+    <div class="panel-body" id="playlist-container">
+
+      <table class="table table-hover">
+        <tbody id="history-table">
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+          <h4>History (10 last videos):</h4>
+          <div id="div_history"></div>
+          <h4>Currently playing: <span id="current_song_title"></span></h4>
+          <div id="player"></div>
+          <h4>Playing next:</h4>
+          <div id="div_playlist"></div>
+
+          <div class="bottom_spacer"></div>
+
   </div>
 </div>
 
