@@ -39,10 +39,11 @@ if ($task == "report") {
 
 if ($task == "chat") {
   $room = $Rooms->get_room($room_id);
+  $user_id = $Users->get_auth_id();
   switch ($kind) {
     case 'add':
       $text = $_POST["text"];
-      $Chat->add($text, $room);
+      $Chat->add($text, $room_id, $user_id);
       $result = true;
       $room->generate_update_version();
       break;

@@ -81,5 +81,9 @@ class Users {
     global $_SESSION;
     return $_SESSION["auth_email"];
   }
+
+  function get_auth_id() {
+    return $this->db->get_user_id_by_email($this->get_auth_email());
+  }
 }
 ?>
