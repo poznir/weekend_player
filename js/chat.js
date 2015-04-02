@@ -8,6 +8,15 @@
     };
 })(jQuery);
 
+
+$(document).ready(function() {
+    $('#chat-text').keypress(function(event) { if (event.keyCode == 13) {
+        Chat.send_chat($('#chat-text').val());
+        $('#chat-text').val('');
+    }});
+} );
+
+
 var Chat = {
     getInfo: function () {
     },

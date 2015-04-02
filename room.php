@@ -59,6 +59,7 @@
             </tbody>
           </table>
 
+          <input id="chat-text" class="form-control" required autofocus />
         </div><!-- end of panel body -->
       </div><!-- end of panel -->
     </div><!-- end of tab-pane -->

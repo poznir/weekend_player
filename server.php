@@ -42,7 +42,7 @@ if ($task == "chat") {
   switch ($kind) {
     case 'add':
       $text = $_POST["text"];
-      $Chat->add($text);
+      $Chat->add($text, $room);
       $result = true;
       $room->generate_update_version();
       break;

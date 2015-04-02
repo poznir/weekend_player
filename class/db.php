@@ -31,6 +31,13 @@ class mydb {
   public function close() {
     mysqli_close($this->con);
   }
+
+  public function get_user_id_by_email($email) {
+    $safe_reason = $this->con->safe($email);
+    $result = $this->con->query("SELECT id FROM weekendv2_users WHERE email='$email' LIMIT 1");
+    $row = $this->con->fetch($result);
+    return $row['id'];
+  }
 }
 
 ?>
