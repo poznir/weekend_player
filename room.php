@@ -28,6 +28,7 @@
 <div class="container-fluid">
   <!-- navigation -->
   <ol class="breadcrumb">
+    <li><span class='glyphicon glyphicon-music'></span></li>
     <li><a href="/">Home</a></li>
     <li class="active">Room: <?=$room->get_name()?></li>
   </ol>
