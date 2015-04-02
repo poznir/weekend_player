@@ -1,33 +1,34 @@
 <?php
-require_once "startup.php";
-$error_message = "";
-if (!$Users->is_auth()) {
-  header('Location: login.php');
-  die();
-}
+  require_once "startup.php";
+  $error_message = "";
+  if (!$Users->is_auth()) {
+    header('Location: login.php');
+    die();
+  }
 
-$room_id = $_GET["id"];
-if (!$Rooms->room_exists_by_id($room_id)) {
-   header('Location: index.php');
-   die();
-}
+  $room_id = $_GET["id"];
+  if (!$Rooms->room_exists_by_id($room_id)) {
+     header('Location: index.php');
+     die();
+  }
 
-$room = $Rooms->get_room($room_id);
+  $room = $Rooms->get_room($room_id);
 
-require("header.php");
+  require("header.php");
 ?>
 <script src="/js/room.js"></script>
 <script src="/js/chat.js"></script>
 <script>
-/* don't worry it wont help you hack the room, just to save IO */
-is_room_admin = <?=($Users->get_auth_email() == $room->get_owner_email() ? "true" : "false")?>;
-room_id = "<?=$room_id?>";
+  /* don't worry it wont help you hack the room, just to save IO */
+  is_room_admin = <?=($Users->get_auth_email() == $room->get_owner_email() ? "true" : "false")?>;
+  room_id = "<?=$room_id?>";
 </script>
 
 
 <div class="container-fluid">
   <!-- navigation -->
   <ol class="breadcrumb">
+    <li><span class='glyphicon glyphicon-music'></span></li>
     <li><a href="/">Home</a></li>
     <li class="active">Room: <?=$room->get_name()?></li>
   </ol>
@@ -39,7 +40,7 @@ room_id = "<?=$room_id?>";
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#now-playing" aria-controls="now-playing" role="tab" data-toggle="tab">Playlist</a></li>
-    <li role="presentation"><a href="#chat" aria-controls="chat" role="tab" data-toggle="tab">Chat</a></li>
+    <li role="presentation"><a href="#chat" aria-controls="chat" role="tab" data-toggle="tab">Chat <span id="chat_message_count" class="badge">0</span></a></li>
     <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
   </ul>
 
@@ -49,6 +50,22 @@ room_id = "<?=$room_id?>";
     </div><!-- end of tab-pane -->
 
     <div role="tabpanel" class="tab-pane" id="chat">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Chat</div>
+        <div class="panel-body" id="chat-container">
+
+          <table class="table table-hover" id="chat-table">
+            <tbody id="chat-table-data">
+            </tbody>
+          </table>
+
+          <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></div>
+            <input id="chat-text" class="form-control" required autofocus placeholder="Be nice or go away" />
+          </div>
+        </div><!-- end of panel body -->
+        <div class="panel-footer"><span class="small itallic" id="chat-online-list"></span></div>
+      </div><!-- end of panel -->
     </div><!-- end of tab-pane -->
 
     <div role="tabpanel" class="tab-pane" id="settings">
@@ -86,8 +103,8 @@ room_id = "<?=$room_id?>";
         <div class="panel-heading">Playlist</div>
         <div class="panel-body" id="playlist-container">
 
-          <table class="table table-hover">
-            <tbody id="history-table">
+          <table class="table table-hover" id="history-table">
+            <tbody id="history-table-data">
             </tbody>
           </table>
 
@@ -125,7 +142,6 @@ room_id = "<?=$room_id?>";
   </div><!-- end of row -->
 </div><!-- end of container -->
 
-<div class="pinpoint_rulez">Pinpoint Rulez.</div>
 
 <div class="room_container">
 

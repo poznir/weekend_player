@@ -141,7 +141,13 @@ class Room {
 
   public function get_chat() {
     $room_id = $this->get_id();
-    $result = $this->db->query("SELECT * FROM weekendv2_chat WHERE room_id = $room_id ORDER BY timestamp DESC LIMIT 20");
+    $query = "SELECT * FROM
+          weekendv2_chat
+        JOIN weekendv2_users ON weekendv2_chat.user_id = weekendv2_users.id
+        WHERE room_id = $room_id
+        ORDER BY timestamp
+        DESC LIMIT 20";
+    $result = $this->db->query($query);
     if (!$result) {
       return array();
     }
@@ -149,6 +155,7 @@ class Room {
     while ($row = $this->db->fetch($result)) {
       $list[] = $row;
     }
+    $list = array_reverse($list);
     return $list;
   }
 

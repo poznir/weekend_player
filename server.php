@@ -39,10 +39,13 @@ if ($task == "report") {
 
 if ($task == "chat") {
   $room = $Rooms->get_room($room_id);
+  $user_id = $Users->get_auth_id();
   switch ($kind) {
     case 'add':
       $text = $_POST["text"];
-      $Chat->add($text);
+      $Chat->add($text, $room_id, $user_id);
+      $result = true;
+      $room->generate_update_version();
       break;
     case 'delete':
       break;
@@ -137,6 +140,7 @@ function fetch_data($room) {
     "currently_playing_id" => $room->get_currently_playing_id(),
     "playlist" => $room->get_playlist(),
     "history" => $room->get_history(),
+    "chat" => $room->get_chat(),
     "stats" => $room->get_stats(),
     "members" => get_members_list($room),
     "admin_volume" => get_admin_volume($room),
@@ -189,6 +193,7 @@ while (!is_timeout($start_time, $config_server_poll_max_executing_time)) {
       "currently_playing_id" => $data["currently_playing_id"],
       "playlist" => $data["playlist"],
       "history" => $data["history"],
+      "chat" => $data["chat"],
       "stats" => $data["stats"],
       "members" => $data["members"],
       "admin_volume" => $data["admin_volume"],

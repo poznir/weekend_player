@@ -16,6 +16,13 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
 
+$(document).ready(function() {
+//    $('#history-table').dataTable();
+} );
+var Room = {
+    members: []
+};
+
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         height: '360',
@@ -164,6 +171,18 @@ function parsePollingData(data) {
         }
         return;
     }
+
+    //TODO: Need to move it to outer, more general controller
+    if (data["chat"]) {
+        Chat.update_chat(data["chat"]);
+    }
+
+    if (data["members"]) {
+        //TODO: fix this
+        Room.members = data["members"];
+        Chat.update_online_users(Room.members);
+    }
+
     DT_update_version = data["update_version"];
     var currently_playing_id = data["currently_playing_id"];
     var playlist = data["playlist"];
@@ -272,7 +291,7 @@ function update_lists_info(playlist, history, members) {
     redraw_list($("#div_history")[0], history, false);
     redraw_list($("#div_playlist")[0], playlist, true);
 
-    create_table_data($("#history-table")[0], playlist.concat(history));
+    create_table_data($("#history-table-data")[0], playlist.concat(history));
 
     redraw_members_list(members);
 }
@@ -351,7 +370,7 @@ function create_table_data(table, list) {
       "</tr>";
 
     }
-    $("#history-table").html(table_row);
+    $("#history-table-data").html(table_row);
 }
 
 function redraw_list(div, list, inc_counter) {
