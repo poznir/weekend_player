@@ -18,8 +18,8 @@ var player;
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
-        height: '390',
-        width: '640',
+        height: '360',
+        width: '570',
         videoId: 'M7lc1UVf-VE',
         events: {
             'onReady': onPlayerReady,
@@ -178,7 +178,23 @@ function parsePollingData(data) {
     }
     update_lists_info(playlist, history, members);
     redraw_admin_volume(data["admin_volume"]);
+    console.log(data);
+    update_stats(data["stats"]);
     redraw_admin_radio(data["admin_radio"]);
+}
+
+function update_stats(data) {
+    var content = "";
+    for (var i in data) {
+        var name = data[i]["name"],
+            total = data[i]["total_uploaded"];
+
+        content += "<tr><td>" + name + "</td><td>" + total + "</td></tr>";
+
+    }
+
+    var string = "<!-- Table --><table class='table'><thead><tr><th>Name</th><th>Total</th></tr></thead><tbody>" + content + "</tbody></table>";
+    $("#stats_contributers").html(string);
 }
 
 function redraw_admin_volume(volume) {
@@ -255,6 +271,9 @@ function update_lists_info(playlist, history, members) {
     $("#div_playlist")[0].innerHTML = "";
     redraw_list($("#div_history")[0], history, false);
     redraw_list($("#div_playlist")[0], playlist, true);
+
+    create_table_data($("#history-table")[0], playlist.concat(history));
+
     redraw_members_list(members);
 }
 
@@ -277,12 +296,62 @@ function redraw_members_list(members) {
 
     for (var i in members) {
         var one = members[i];
-        var li = $("<li>")[0];
+        var li = $("<li class='list-group-item'>")[0];
         li.innerText = li.textContent = one["member_name"];
         li.title = one["member_email"] + " (last update before " + one["last_update"] + " seconds)";
         container.appendChild(li);
     }
     $("#room_members_list_head_count")[0].innerText = members.length;
+}
+
+
+
+function truncate(string){
+   if (string.length > 200)
+      return string.substring(0,200) + '...';
+   else
+      return string;
+}
+
+function create_table_data(table, list) {
+    var table_row = "";
+    for (var i in list) {
+        var one = list[i];
+        var id = one["id"];
+        var tr_class = DT_currently_playing_id == id ? ' class="info" ' : '';
+        var v = one["v"];
+        var title = one["title"];
+
+        title = this.truncate(title);
+        if (DT_currently_playing_id == id) {
+            title = "<span class='glyphicon glyphicon-play'></span> " + title;
+        }
+
+        var song_id = one["id"];
+        var added_by_email = one["added_by_email"];
+        var datetime = one["datetime"];
+        var votes = one["votes"];
+        var skip_reason = one["skip_reason"];
+        var user_name = one["user_name"];
+        var length = one["length"];
+        var copy = one["copy"];
+        var youtube_url = "https://www.youtube.com/watch?v=" + v;
+
+
+    var buttons = "";
+
+
+    table_row += "<tr" + tr_class + ">" +
+        "<td>" + title + "</td><td>" + length_to_time(length) + "</td><td>" + user_name + "</td>" +
+        "<td>" +
+          "<a href='#'><span class='glyphicon glyphicon-thumbs-up' aria-hidden='true' onclick='vote_video(" + song_id + ", 1)'></span></a>" +
+          " <span class='badge'>" + votes + "</span> " +
+          "<a href='#'><span class='glyphicon glyphicon-thumbs-down' aria-hidden='true' onclick='vote_video(" + song_id + ", -1)'></span></a>" +
+        "</td>" +
+      "</tr>";
+
+    }
+    $("#history-table").html(table_row);
 }
 
 function redraw_list(div, list, inc_counter) {
@@ -297,8 +366,10 @@ function redraw_list(div, list, inc_counter) {
         inc_counter ? counter++ : counter--;
         var v = one["v"];
         var title = one["title"];
+        var song_id = one["id"];
         var added_by_email = one["added_by_email"];
         var datetime = one["datetime"];
+        var votes = one["votes"];
         var skip_reason = one["skip_reason"];
         var user_name = one["user_name"];
         var length = one["length"];
@@ -316,6 +387,19 @@ function redraw_list(div, list, inc_counter) {
         if (skip_reason && skip_reason != "played") {
             div_container.appendChild(create_inline_div("(" + skip_reason + ")", "item_inline_skipreason"));
         }
+    //add votes
+    var buttons = "";
+    buttons += ' | ';
+    buttons += '<a href="#"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" onclick="vote_video(' + song_id + ', 1)"></span></a>';
+    buttons += ' <span class="badge">' + votes + '</span> ';
+    buttons += '<a href="#"><span class="glyphicon glyphicon-thumbs-down" aria-hidden="true" onclick="vote_video(' + song_id + ', -1)"></span></a>';
+
+    if (is_room_admin) {
+        buttons += ' | ';
+        buttons += '<a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="remove_video(' + song_id + ')"></span></a>';
+    }
+    div_container.appendChild(create_inline_div(buttons));
+
         div.appendChild(div_container);
     }
 }
@@ -379,6 +463,42 @@ function admin_report(kind, reason) {
         },
         success: function(data) {
             // no return data
+        },
+        dataType: "json",
+        timeout: 60000
+    });
+}
+
+function remove_video(video_id) {
+    $.ajax({
+        url: "server.php?" + generate_ajax_key(),
+        type: "POST",
+        data: {
+            "id": room_id,
+            "video_id": video_id,
+            "task": "client",
+            "kind": "remove"
+        },
+        success: function(data) {
+            doPolling();
+        },
+        dataType: "json",
+        timeout: 60000
+    });
+}
+
+function vote_video(video_id, vote) {
+    $.ajax({
+        url: "server.php?" + generate_ajax_key(),
+        type: "POST",
+        data: {
+            "id": room_id,
+            "video_id": video_id,
+            "vote": vote,
+            "task": "client",
+            "kind": "vote"
+        },
+        success: function(data) {
         },
         dataType: "json",
         timeout: 60000

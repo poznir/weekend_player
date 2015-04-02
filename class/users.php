@@ -65,7 +65,7 @@ class Users {
     return (isset($_SESSION["auth"]) && $_SESSION["auth"] == true ? true : false);
   }
 
-  function set_auth($email) {
+  function set_auth($email, $user_id=0) {
     global $_SESSION;
     $_SESSION["auth"] = true;
     $_SESSION["auth_email"] = $email;

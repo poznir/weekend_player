@@ -39,6 +39,7 @@ body {
 
 .room_container {
   position: relative;
+  display: none;
 }
 
 .room_panels {
@@ -123,4 +124,31 @@ body {
 
 .item_inline_copy {
   color: rgb(175, 26, 216);
+}
+
+.glyphicon-thumbs-up {
+  color: green;
+}
+
+.glyphicon-thumbs-down {
+  color: red;
+}
+
+.glyphicon-remove {
+  color: red;
+}
+
+.chat {
+  float: right;
+  width: 400px;
+  height: 800px;
+  outline: 1px solid green;
+}
+
+.stats {
+  float: right;
+  width: 400px;
+  width: 600px;
+  height: 800px;
+  outline: 1px solid green;
 }
