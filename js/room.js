@@ -16,6 +16,10 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
 
+$(document).ready(function() {
+    //$('#history-table').dataTable();
+} );
+
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
         height: '360',

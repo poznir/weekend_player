@@ -1,27 +1,27 @@
 <?php
-require_once "startup.php";
-$error_message = "";
-if (!$Users->is_auth()) {
-  header('Location: login.php');
-  die();
-}
+  require_once "startup.php";
+  $error_message = "";
+  if (!$Users->is_auth()) {
+    header('Location: login.php');
+    die();
+  }
 
-$room_id = $_GET["id"];
-if (!$Rooms->room_exists_by_id($room_id)) {
-   header('Location: index.php');
-   die();
-}
+  $room_id = $_GET["id"];
+  if (!$Rooms->room_exists_by_id($room_id)) {
+     header('Location: index.php');
+     die();
+  }
 
-$room = $Rooms->get_room($room_id);
+  $room = $Rooms->get_room($room_id);
 
-require("header.php");
+  require("header.php");
 ?>
 <script src="/js/room.js"></script>
 <script src="/js/chat.js"></script>
 <script>
-/* don't worry it wont help you hack the room, just to save IO */
-is_room_admin = <?=($Users->get_auth_email() == $room->get_owner_email() ? "true" : "false")?>;
-room_id = "<?=$room_id?>";
+  /* don't worry it wont help you hack the room, just to save IO */
+  is_room_admin = <?=($Users->get_auth_email() == $room->get_owner_email() ? "true" : "false")?>;
+  room_id = "<?=$room_id?>";
 </script>
 
 
@@ -86,8 +86,8 @@ room_id = "<?=$room_id?>";
         <div class="panel-heading">Playlist</div>
         <div class="panel-body" id="playlist-container">
 
-          <table class="table table-hover">
-            <tbody id="history-table">
+          <table class="table table-hover" id="history-table">
+            <tbody>
             </tbody>
           </table>
 
@@ -125,7 +125,6 @@ room_id = "<?=$room_id?>";
   </div><!-- end of row -->
 </div><!-- end of container -->
 
-<div class="pinpoint_rulez">Pinpoint Rulez.</div>
 
 <div class="room_container">
 
