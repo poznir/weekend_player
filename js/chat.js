@@ -76,9 +76,10 @@ var Chat = {
             var user_name = one["name"];
             var time = one["timestamp"];
 
+        date = new Date(time);
         text = $.sanitize(text);
         table_row += "<tr>" +
-        "<td>" + time + "</td>" +
+        "<td>" + date + "</td>" +
         "<td>" + user_name + "</td>" +
         "<td>" + text + "</td>" +
         "</tr>";
@@ -92,6 +93,10 @@ var Chat = {
         //   "</tr>";
 
         }
+
         $("#chat-table-data").html(table_row);
+
+        //update chat message counter
+        $("#chat_message_count").text(list.length);
     }
 }
