@@ -271,6 +271,9 @@ function update_lists_info(playlist, history, members) {
     $("#div_playlist")[0].innerHTML = "";
     redraw_list($("#div_history")[0], history, false);
     redraw_list($("#div_playlist")[0], playlist, true);
+
+    create_table_data($("#history-table")[0], history.concat(playlist));
+
     redraw_members_list(members);
 }
 
@@ -299,6 +302,56 @@ function redraw_members_list(members) {
         container.appendChild(li);
     }
     $("#room_members_list_head_count")[0].innerText = members.length;
+}
+
+
+
+function truncate(string){
+   if (string.length > 30)
+      return string.substring(0,30)+'...';
+   else
+      return string;
+}
+
+function create_table_data(table, list) {
+    var table_row = "";
+    for (var i in list) {
+        var one = list[i];
+        var id = one["id"];
+        var tr_class = DT_currently_playing_id == id ? ' class="info" ' : '';
+        var v = one["v"];
+        var title = one["title"];
+
+        title = this.truncate(title);
+        if (DT_currently_playing_id == id) {
+            title = "<span class='glyphicon glyphicon-play'></span> " + title;
+        }
+
+        var song_id = one["id"];
+        var added_by_email = one["added_by_email"];
+        var datetime = one["datetime"];
+        var votes = one["votes"];
+        var skip_reason = one["skip_reason"];
+        var user_name = one["user_name"];
+        var length = one["length"];
+        var copy = one["copy"];
+        var youtube_url = "https://www.youtube.com/watch?v=" + v;
+
+
+    var buttons = "";
+
+
+    table_row += "<tr" + tr_class + ">" +
+        "<td>" + title + "</td><td>" + length_to_time(length) + "</td><td>" + user_name + "</td>" +
+        "<td>" +
+          "<a href='#'><span class='glyphicon glyphicon-thumbs-up' aria-hidden='true' onclick='vote_video(" + song_id + ", 1)'></span></a>" +
+          " <span class='badge'>" + votes + "</span> " +
+          "<a href='#'><span class='glyphicon glyphicon-thumbs-down' aria-hidden='true' onclick='vote_video(" + song_id + ", -1)'></span></a>" +
+        "</td>" +
+      "</tr>";
+
+    }
+    $("#history-table").html(table_row);
 }
 
 function redraw_list(div, list, inc_counter) {
@@ -345,7 +398,6 @@ function redraw_list(div, list, inc_counter) {
         buttons += ' | ';
         buttons += '<a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="remove_video(' + song_id + ')"></span></a>';
     }
-
     div_container.appendChild(create_inline_div(buttons));
 
         div.appendChild(div_container);

@@ -36,8 +36,15 @@ room_id = "<?=$room_id?>";
   </div>
 
   <div class="panel panel-primary">
-    <div class="panel-heading">Chat</div>
-    <div class="panel-body" id="chat-container"></div>
+    <div class="panel-heading">Playlist</div>
+    <div class="panel-body" id="playlist-container">
+
+      <table class="table table-hover">
+        <tbody id="history-table">
+        </tbody>
+      </table>
+
+    </div>
   </div>
 </div>
 

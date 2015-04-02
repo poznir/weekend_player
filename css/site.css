@@ -147,6 +147,7 @@ body {
 .stats {
   float: right;
   width: 400px;
+  width: 600px;
   height: 800px;
   outline: 1px solid green;
 }
